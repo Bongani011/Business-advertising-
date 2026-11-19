@@ -10,6 +10,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: inherit;
 }
 
 html {
@@ -18,9 +19,7 @@ html {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-
     color: #ffffff;
-
     background:
         radial-gradient(
             circle at 10% 10%,
@@ -33,7 +32,6 @@ body {
             transparent 30%
         ),
         #050b16;
-
     line-height: 1.6;
 }
 
@@ -53,29 +51,19 @@ a {
 .header {
     position: sticky;
     top: 0;
-
     z-index: 1000;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     padding: 18px 7%;
-
     background: rgba(4, 10, 20, 0.92);
-
     backdrop-filter: blur(15px);
-
     border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .logo {
     font-size: 1.6rem;
-
     font-weight: 900;
-
     letter-spacing: 2px;
 }
 
@@ -85,15 +73,12 @@ a {
 
 .header nav {
     display: flex;
-
     gap: 28px;
 }
 
 .header nav a {
     color: #c6d4e5;
-
     font-weight: 600;
-
     transition: 0.3s;
 }
 
@@ -103,15 +88,10 @@ a {
 
 .menu-button {
     display: none;
-
     background: transparent;
-
     border: none;
-
     color: white;
-
     font-size: 1.8rem;
-
     cursor: pointer;
 }
 
@@ -120,33 +100,23 @@ a {
 
 .hero {
     min-height: 85vh;
-
     display: grid;
-
     grid-template-columns: 1.2fr 0.8fr;
-
     align-items: center;
-
     gap: 60px;
-
     padding: 90px 7%;
 }
 
 .small-title {
     color: #2eb1ff;
-
     font-size: 0.8rem;
-
     font-weight: bold;
-
     letter-spacing: 2px;
 }
 
 .hero h1 {
     font-size: clamp(3rem, 7vw, 6rem);
-
     line-height: 0.95;
-
     margin: 20px 0;
 }
 
@@ -156,11 +126,8 @@ a {
 
 .hero p {
     max-width: 650px;
-
     color: #a9bbce;
-
     font-size: 1.1rem;
-
     margin-bottom: 30px;
 }
 
@@ -169,46 +136,34 @@ a {
 
 .hero-buttons {
     display: flex;
-
     gap: 15px;
-
     flex-wrap: wrap;
 }
 
 .btn {
     display: inline-block;
-
     padding: 14px 23px;
-
     border-radius: 8px;
-
     font-weight: bold;
-
     border: none;
-
     cursor: pointer;
-
     transition: 0.3s;
 }
 
 .primary {
     background: #168fff;
-
     color: white;
-
-    box-shadow:
-        0 10px 30px rgba(22,143,255,0.25);
+    box-shadow: 0 10px 30px rgba(22,143,255,0.25);
 }
 
 .primary:hover {
     transform: translateY(-3px);
-
     background: #36a8ff;
 }
 
 .secondary {
+    background: transparent;
     border: 1px solid #2378b5;
-
     color: #dcecff;
 }
 
@@ -221,54 +176,38 @@ a {
 
 .hero-ad {
     padding: 30px;
-
     border-radius: 22px;
-
     background:
         linear-gradient(
             145deg,
             rgba(21,143,255,0.18),
             rgba(255,255,255,0.04)
         );
-
     border: 1px solid rgba(70,175,255,0.25);
-
-    box-shadow:
-        0 30px 70px rgba(0,0,0,0.35);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.35);
 }
 
 .ad-label {
     color: #4dbaff;
-
     font-size: 0.75rem;
-
     font-weight: bold;
-
     letter-spacing: 2px;
-
     margin-bottom: 15px;
 }
 
 .hero-image {
     height: 260px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-size: 7rem;
-
     border-radius: 15px;
-
     background:
         linear-gradient(
             135deg,
             #102b49,
             #071322
         );
-
     margin-bottom: 20px;
 }
 
@@ -278,7 +217,6 @@ a {
 
 .hero-ad p {
     margin: 5px 0 0;
-
     font-size: 0.95rem;
 }
 
@@ -287,32 +225,23 @@ a {
 
 .search-section {
     padding: 30px 7%;
-
     background: #071222;
 }
 
 .search-container {
     max-width: 1100px;
-
     margin: auto;
-
     display: flex;
-
     gap: 10px;
 }
 
 .search-container input,
 .search-container select {
     padding: 16px;
-
     border: 1px solid #243c55;
-
     background: #0c1a2b;
-
     color: white;
-
     border-radius: 7px;
-
     outline: none;
 }
 
@@ -331,18 +260,17 @@ a {
 
 .search-container button {
     padding: 0 25px;
-
     border: none;
-
     border-radius: 7px;
-
     background: #168fff;
-
     color: white;
-
     font-weight: bold;
-
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.search-container button:hover {
+    background: #36a8ff;
 }
 
 
@@ -354,7 +282,6 @@ a {
 
 .section-heading {
     max-width: 750px;
-
     margin-bottom: 50px;
 }
 
@@ -362,11 +289,8 @@ a {
 .contact-container > div > span,
 .advertise-content > span {
     color: #27adff;
-
     font-size: 0.8rem;
-
     font-weight: bold;
-
     letter-spacing: 2px;
 }
 
@@ -374,9 +298,7 @@ a {
 .advertise-content h2,
 .contact-container h2 {
     font-size: clamp(2rem, 5vw, 3.5rem);
-
     line-height: 1.1;
-
     margin: 12px 0;
 }
 
@@ -389,10 +311,7 @@ a {
 
 .product-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
+    grid-template-columns: repeat(4, 1fr);
     gap: 22px;
 }
 
@@ -401,28 +320,21 @@ a {
 
 .product-card {
     overflow: hidden;
-
     border-radius: 16px;
-
     background:
         linear-gradient(
             145deg,
             #0c1d31,
             #081321
         );
-
     border: 1px solid rgba(255,255,255,0.08);
-
     transition: 0.3s;
 }
 
 .product-card:hover {
     transform: translateY(-8px);
-
     border-color: rgba(31,166,255,0.6);
-
-    box-shadow:
-        0 20px 50px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
 }
 
 
@@ -430,19 +342,14 @@ a {
 
 .product-image {
     position: relative;
-
     height: 240px;
-
     overflow: hidden;
-
     background: #0c1b2d;
 }
 
 .product-image img {
     height: 100%;
-
     object-fit: cover;
-
     transition: 0.5s;
 }
 
@@ -452,21 +359,13 @@ a {
 
 .category {
     position: absolute;
-
     top: 12px;
-
     left: 12px;
-
     padding: 6px 10px;
-
     border-radius: 50px;
-
     background: rgba(0,0,0,0.75);
-
     color: #58c2ff;
-
     font-size: 0.7rem;
-
     font-weight: bold;
 }
 
@@ -479,63 +378,46 @@ a {
 
 .product-info h3 {
     font-size: 1.2rem;
-
     margin-bottom: 4px;
 }
 
 .business-name {
     color: #32aeff;
-
     font-size: 0.85rem;
-
     font-weight: bold;
 }
 
 .description {
     color: #91a6bb;
-
     font-size: 0.9rem;
-
     margin: 12px 0 20px;
 }
 
 .product-bottom {
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     gap: 10px;
 }
 
 .price {
     color: white;
-
     font-size: 1.3rem;
-
     font-weight: 900;
 }
 
 .whatsapp-btn {
     padding: 9px 13px;
-
     border-radius: 6px;
-
     background: #20b957;
-
     color: white;
-
     font-size: 0.8rem;
-
     font-weight: bold;
-
     transition: 0.3s;
 }
 
 .whatsapp-btn:hover {
     background: #28d465;
-
     transform: translateY(-2px);
 }
 
@@ -544,11 +426,8 @@ a {
 
 .no-products {
     display: none;
-
     text-align: center;
-
     color: #ff9c9c;
-
     margin-top: 30px;
 }
 
@@ -557,7 +436,6 @@ a {
 
 .advertise-section {
     padding: 100px 7%;
-
     background:
         linear-gradient(
             135deg,
@@ -572,7 +450,6 @@ a {
 
 .advertise-content p {
     color: #c2d2e2;
-
     margin: 20px 0 30px;
 }
 
@@ -581,34 +458,25 @@ a {
 
 .services-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
 .service-card {
     padding: 30px;
-
     border-radius: 16px;
-
     background: rgba(255,255,255,0.035);
-
     border: 1px solid rgba(255,255,255,0.08);
-
     transition: 0.3s;
 }
 
 .service-card:hover {
     transform: translateY(-6px);
-
     border-color: #218fdb;
 }
 
 .service-icon {
     font-size: 2.5rem;
-
     margin-bottom: 15px;
 }
 
@@ -618,7 +486,6 @@ a {
 
 .service-card p {
     color: #96aabd;
-
     font-size: 0.9rem;
 }
 
@@ -627,7 +494,6 @@ a {
 
 .contact-section {
     padding: 100px 7%;
-
     background:
         radial-gradient(
             circle at 80% 50%,
@@ -638,56 +504,37 @@ a {
 
 .contact-container {
     max-width: 1100px;
-
     margin: auto;
-
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 60px;
-
     align-items: center;
 }
 
 .contact-container p {
     color: #9fb2c6;
-
     margin-top: 15px;
 }
 
 #contactForm {
     display: flex;
-
     flex-direction: column;
-
     gap: 15px;
-
     padding: 30px;
-
     background: rgba(255,255,255,0.04);
-
     border: 1px solid rgba(255,255,255,0.09);
-
     border-radius: 16px;
 }
 
 #contactForm input,
 #contactForm textarea {
     width: 100%;
-
     padding: 15px;
-
     border: 1px solid #2b435b;
-
     border-radius: 7px;
-
     background: #0b192a;
-
     color: white;
-
     outline: none;
-
     resize: vertical;
 }
 
@@ -701,25 +548,17 @@ a {
 
 footer {
     padding: 35px 7%;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     flex-wrap: wrap;
-
     gap: 20px;
-
     border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 .footer-logo {
     color: #28aaff;
-
     font-weight: 900;
-
     font-size: 1.4rem;
 }
 
@@ -729,7 +568,6 @@ footer p {
 
 .footer-links {
     display: flex;
-
     gap: 20px;
 }
 
@@ -746,37 +584,24 @@ footer p {
 
 #topButton {
     position: fixed;
-
     right: 25px;
-
     bottom: 25px;
-
     width: 45px;
-
     height: 45px;
-
     display: none;
-
     border: none;
-
     border-radius: 50%;
-
     background: #168fff;
-
     color: white;
-
     font-size: 1.3rem;
-
     cursor: pointer;
-
     z-index: 500;
 }
 
 
-/* ================= MOBILE ================= */
+/* ================= TABLET / SMALL DESKTOP ================= */
 
 @media (max-width: 1000px) {
-
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -788,31 +613,21 @@ footer p {
     .hero {
         grid-template-columns: 1fr;
     }
-
 }
 
 
-/* ================= TABLET ================= */
+/* ================= MOBILE NAVIGATION & LAYOUT ================= */
 
 @media (max-width: 750px) {
-
     .header nav {
         position: absolute;
-
         top: 100%;
-
         left: 0;
-
         width: 100%;
-
         display: none;
-
         flex-direction: column;
-
         padding: 20px 7%;
-
         background: #071222;
-
         border-top: 1px solid rgba(255,255,255,0.08);
     }
 
@@ -839,14 +654,12 @@ footer p {
     .contact-container {
         grid-template-columns: 1fr;
     }
-
 }
 
 
 /* ================= PHONE ================= */
 
 @media (max-width: 550px) {
-
     .hero {
         padding: 65px 5%;
     }
@@ -874,8 +687,6 @@ footer p {
 
     footer {
         align-items: flex-start;
-
         flex-direction: column;
     }
-
 }
