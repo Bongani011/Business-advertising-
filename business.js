@@ -1,232 +1,692 @@
 /* =========================================================
    BONGX031 BUSINESS ADVERTISING
-   JAVASCRIPT
+   MODERN MARKETPLACE DESIGN
 ========================================================= */
 
 
-/* ================= MOBILE MENU ================= */
+/* ================= RESET ================= */
 
-const menuButton =
-    document.getElementById("menuButton");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
 
-const navMenu =
-    document.getElementById("navMenu");
+html {
+    scroll-behavior: smooth;
+}
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ffffff;
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(0, 136, 255, 0.20),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 40%,
+            rgba(0, 102, 255, 0.15),
+            transparent 30%
+        ),
+        #050b16;
+    line-height: 1.6;
+}
 
-menuButton.addEventListener("click", function () {
+img {
+    width: 100%;
+    display: block;
+}
 
-    navMenu.classList.toggle("active");
-
-});
-
-
-/* Close menu when a link is clicked */
-
-const navLinks =
-    document.querySelectorAll("#navMenu a");
-
-
-navLinks.forEach(function (link) {
-
-    link.addEventListener("click", function () {
-
-        navMenu.classList.remove("active");
-
-    });
-
-});
-
-
-
-/* ================= PRODUCT SEARCH ================= */
-
-const searchInput =
-    document.getElementById("searchInput");
-
-const categoryFilter =
-    document.getElementById("categoryFilter");
-
-const searchButton =
-    document.getElementById("searchButton");
-
-const productCards =
-    document.querySelectorAll(".product-card");
-
-const noProducts =
-    document.getElementById("noProducts");
-
-
-
-function searchProducts() {
-
-    const searchText =
-        searchInput.value
-        .toLowerCase()
-        .trim();
-
-    const selectedCategory =
-        categoryFilter.value;
-
-    let productsFound = 0;
-
-
-    productCards.forEach(function (product) {
-
-        const productName =
-            product.dataset.name.toLowerCase();
-
-        const productCategory =
-            product.dataset.category;
-
-
-        const matchesSearch =
-            productName.includes(searchText);
-
-
-        const matchesCategory =
-            selectedCategory === "all"
-            ||
-            productCategory === selectedCategory;
-
-
-        if (
-            matchesSearch
-            &&
-            matchesCategory
-        ) {
-
-            product.style.display = "block";
-
-            productsFound++;
-
-        } else {
-
-            product.style.display = "none";
-
-        }
-
-    });
-
-
-    if (productsFound === 0) {
-
-        noProducts.style.display = "block";
-
-    } else {
-
-        noProducts.style.display = "none";
-
-    }
-
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 
+/* ================= HEADER ================= */
 
-/* Search button */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 7%;
+    background: rgba(4, 10, 20, 0.92);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
 
-searchButton.addEventListener(
-    "click",
-    searchProducts
-);
+.logo {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: #21a7ff;
+}
+
+.header nav {
+    display: flex;
+    gap: 28px;
+}
+
+.header nav a {
+    color: #c6d4e5;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.header nav a:hover {
+    color: #27aaff;
+}
+
+.menu-button {
+    display: none;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
 
 
+/* ================= HERO ================= */
 
-/* Search while typing */
+.hero {
+    min-height: 85vh;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: 60px;
+    padding: 90px 7%;
+}
 
-searchInput.addEventListener(
-    "keyup",
-    searchProducts
-);
+.small-title {
+    color: #2eb1ff;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
 
+.hero h1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.95;
+    margin: 20px 0;
+}
 
+.hero h1 span {
+    color: #21a7ff;
+}
 
-/* Category filter */
-
-categoryFilter.addEventListener(
-    "change",
-    searchProducts
-);
-
-
-
-/* ================= CONTACT FORM ================= */
-
-const contactForm =
-    document.getElementById("contactForm");
-
-
-contactForm.addEventListener(
-    "submit",
-    function (event) {
-
-        event.preventDefault();
-
-
-        const name =
-            document.getElementById("name").value;
-
-        const business =
-            document.getElementById("business").value;
+.hero p {
+    max-width: 650px;
+    color: #a9bbce;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
 
 
-        alert(
-            "Thank you, " +
-            name +
-            ". Your advertising request for " +
-            business +
-            " has been received."
+/* ================= BUTTONS ================= */
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 23px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.primary {
+    background: #168fff;
+    color: white;
+    box-shadow: 0 10px 30px rgba(22,143,255,0.25);
+}
+
+.primary:hover {
+    transform: translateY(-3px);
+    background: #36a8ff;
+}
+
+.secondary {
+    background: transparent;
+    border: 1px solid #2378b5;
+    color: #dcecff;
+}
+
+.secondary:hover {
+    background: rgba(22,143,255,0.1);
+}
+
+
+/* ================= HERO AD ================= */
+
+.hero-ad {
+    padding: 30px;
+    border-radius: 22px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(21,143,255,0.18),
+            rgba(255,255,255,0.04)
         );
+    border: 1px solid rgba(70,175,255,0.25);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+}
+
+.ad-label {
+    color: #4dbaff;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.hero-image {
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    border-radius: 15px;
+    background:
+        linear-gradient(
+            135deg,
+            #102b49,
+            #071322
+        );
+    margin-bottom: 20px;
+}
+
+.hero-ad h2 {
+    font-size: 1.8rem;
+}
+
+.hero-ad p {
+    margin: 5px 0 0;
+    font-size: 0.95rem;
+}
 
 
-        contactForm.reset();
+/* ================= SEARCH ================= */
 
+.search-section {
+    padding: 30px 7%;
+    background: #071222;
+}
+
+.search-container {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.search-container input,
+.search-container select {
+    padding: 16px;
+    border: 1px solid #243c55;
+    background: #0c1a2b;
+    color: white;
+    border-radius: 7px;
+    outline: none;
+}
+
+.search-container input {
+    flex: 1;
+}
+
+.search-container select {
+    width: 190px;
+}
+
+.search-container input:focus,
+.search-container select:focus {
+    border-color: #1da5ff;
+}
+
+.search-container button {
+    padding: 0 25px;
+    border: none;
+    border-radius: 7px;
+    background: #168fff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.search-container button:hover {
+    background: #36a8ff;
+}
+
+
+/* ================= SECTIONS ================= */
+
+.section {
+    padding: 100px 7%;
+}
+
+.section-heading {
+    max-width: 750px;
+    margin-bottom: 50px;
+}
+
+.section-heading span,
+.contact-container > div > span,
+.advertise-content > span {
+    color: #27adff;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.section-heading h2,
+.advertise-content h2,
+.contact-container h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin: 12px 0;
+}
+
+.section-heading p {
+    color: #9db0c4;
+}
+
+
+/* ================= PRODUCT GRID ================= */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+
+/* ================= PRODUCT CARD ================= */
+
+.product-card {
+    overflow: hidden;
+    border-radius: 16px;
+    background:
+        linear-gradient(
+            145deg,
+            #0c1d31,
+            #081321
+        );
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(31,166,255,0.6);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+
+/* ================= PRODUCT IMAGE ================= */
+
+.product-image {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+    background: #0c1b2d;
+}
+
+.product-image img {
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.08);
+}
+
+.category {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 6px 10px;
+    border-radius: 50px;
+    background: rgba(0,0,0,0.75);
+    color: #58c2ff;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+
+/* ================= PRODUCT INFO ================= */
+
+.product-info {
+    padding: 20px;
+}
+
+.product-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.business-name {
+    color: #32aeff;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.description {
+    color: #91a6bb;
+    font-size: 0.9rem;
+    margin: 12px 0 20px;
+}
+
+.product-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.price {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 900;
+}
+
+.whatsapp-btn {
+    padding: 9px 13px;
+    border-radius: 6px;
+    background: #20b957;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.whatsapp-btn:hover {
+    background: #28d465;
+    transform: translateY(-2px);
+}
+
+
+/* ================= NO PRODUCTS ================= */
+
+.no-products {
+    display: none;
+    text-align: center;
+    color: #ff9c9c;
+    margin-top: 30px;
+}
+
+
+/* ================= ADVERTISE ================= */
+
+.advertise-section {
+    padding: 100px 7%;
+    background:
+        linear-gradient(
+            135deg,
+            #0d4270,
+            #071426 60%
+        );
+}
+
+.advertise-content {
+    max-width: 800px;
+}
+
+.advertise-content p {
+    color: #c2d2e2;
+    margin: 20px 0 30px;
+}
+
+
+/* ================= SERVICES ================= */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.service-card {
+    padding: 30px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    border-color: #218fdb;
+}
+
+.service-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.service-card h3 {
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: #96aabd;
+    font-size: 0.9rem;
+}
+
+
+/* ================= CONTACT ================= */
+
+.contact-section {
+    padding: 100px 7%;
+    background:
+        radial-gradient(
+            circle at 80% 50%,
+            rgba(22,143,255,0.16),
+            transparent 40%
+        );
+}
+
+.contact-container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.contact-container p {
+    color: #9fb2c6;
+    margin-top: 15px;
+}
+
+#contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 16px;
+}
+
+#contactForm input,
+#contactForm textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #2b435b;
+    border-radius: 7px;
+    background: #0b192a;
+    color: white;
+    outline: none;
+    resize: vertical;
+}
+
+#contactForm input:focus,
+#contactForm textarea:focus {
+    border-color: #21a7ff;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer {
+    padding: 35px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-logo {
+    color: #28aaff;
+    font-weight: 900;
+    font-size: 1.4rem;
+}
+
+footer p {
+    color: #70869d;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #8fa4ba;
+}
+
+.footer-links a:hover {
+    color: #2baeff;
+}
+
+
+/* ================= TOP BUTTON ================= */
+
+#topButton {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    width: 45px;
+    height: 45px;
+    display: none;
+    border: none;
+    border-radius: 50%;
+    background: #168fff;
+    color: white;
+    font-size: 1.3rem;
+    cursor: pointer;
+    z-index: 500;
+}
+
+
+/* ================= TABLET / SMALL DESKTOP ================= */
+
+@media (max-width: 1000px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
-);
 
-
-
-/* ================= CURRENT YEAR ================= */
-
-document.getElementById("year").textContent =
-    new Date().getFullYear();
-
-
-
-/* ================= BACK TO TOP ================= */
-
-const topButton =
-    document.getElementById("topButton");
-
-
-window.addEventListener(
-    "scroll",
-    function () {
-
-        if (window.scrollY > 500) {
-
-            topButton.style.display = "block";
-
-        } else {
-
-            topButton.style.display = "none";
-
-        }
-
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
-);
 
-
-topButton.addEventListener(
-    "click",
-    function () {
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
+    .hero {
+        grid-template-columns: 1fr;
     }
-);
+}
+
+
+/* ================= MOBILE NAVIGATION & LAYOUT ================= */
+
+@media (max-width: 750px) {
+    .header nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        padding: 20px 7%;
+        background: #071222;
+        border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .header nav.active {
+        display: flex;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .search-container {
+        flex-direction: column;
+    }
+
+    .search-container select {
+        width: 100%;
+    }
+
+    .search-container button {
+        padding: 15px;
+    }
+
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ================= PHONE ================= */
+
+@media (max-width: 550px) {
+    .hero {
+        padding: 65px 5%;
+    }
+
+    .section {
+        padding: 75px 5%;
+    }
+
+    .hero h1 {
+        font-size: 3.2rem;
+    }
+
+    .product-grid,
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-image {
+        height: 210px;
+    }
+
+    .product-image {
+        height: 260px;
+    }
+
+    footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
