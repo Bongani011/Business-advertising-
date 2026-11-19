@@ -1,663 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>BONGX031 | Business Advertising</title>
-
-    <meta name="description"
-        content="BONGX031 Business Advertising Platform - Advertise products, services and businesses online.">
-
+    <title>BONGX031 | Business Advertising &amp; Marketplace</title>
     <link rel="stylesheet" href="business.css">
 </head>
-
 <body>
 
-
-<!-- ================= HEADER ================= -->
-
-<header class="header">
-
-    <div class="logo">
-        BONGX<span>031</span>
-    </div>
-
-    <nav id="navMenu">
-
-        <a href="#home">Home</a>
-
-        <a href="#products">Products</a>
-
-        <a href="#services">Services</a>
-
-        <a href="#advertise">Advertise</a>
-
-        <a href="#contact">Contact</a>
-
-    </nav>
-
-    <button id="menuButton" class="menu-button">
-        ☰
-    </button>
-
-</header>
-
-
-
-<!-- ================= HERO ================= -->
-
-<section id="home" class="hero">
-
-    <div class="hero-content">
-
-        <span class="small-title">
-            BONGX031 BUSINESS ADVERTISING
-        </span>
-
-        <h1>
-            Advertise Your
-            <span>Business.</span>
-        </h1>
-
-        <p>
-            Showcase your products and services with professional
-            advertisements that customers can easily find,
-            view and contact you about.
-        </p>
-
-        <div class="hero-buttons">
-
-            <a href="#products" class="btn primary">
-                Browse Products
-            </a>
-
-            <a href="#advertise" class="btn secondary">
-                Advertise Your Business
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <div class="hero-ad">
-
-        <div class="ad-label">
-            FEATURED BUSINESS
-        </div>
-
-        <div class="hero-image">
-            📦
-        </div>
-
-        <h2>
-            Your Product Here
-        </h2>
-
-        <p>
-            Put your business in front of potential customers.
-        </p>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= SEARCH ================= -->
-
-<section class="search-section">
-
-    <div class="search-container">
-
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search products or businesses..."
-        >
-
-        <select id="categoryFilter">
-
-            <option value="all">
-                All Categories
-            </option>
-
-            <option value="electronics">
-                Electronics
-            </option>
-
-            <option value="clothing">
-                Clothing
-            </option>
-
-            <option value="food">
-                Food
-            </option>
-
-            <option value="beauty">
-                Beauty
-            </option>
-
-            <option value="services">
-                Services
-            </option>
-
-            <option value="other">
-                Other
-            </option>
-
-        </select>
-
-        <button id="searchButton">
-            Search
-        </button>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= PRODUCTS ================= -->
-
-<section id="products" class="section">
-
-    <div class="section-heading">
-
-        <span>BUSINESS MARKETPLACE</span>
-
-        <h2>
-            Products & Services
-        </h2>
-
-        <p>
-            Browse advertisements from businesses and
-            individuals selling products and services.
-        </p>
-
-    </div>
-
-
-    <div id="productGrid" class="product-grid">
-
-
-        <!-- PRODUCT 1 -->
-
-        <article
-            class="product-card"
-            data-category="electronics"
-            data-name="smartphone">
-
-            <div class="product-image">
-
-                <img
-                    src="images/phone.jpg"
-                    alt="Smartphone">
-
-                <span class="category">
-                    Electronics
-                </span>
-
-            </div>
-
-            <div class="product-info">
-
-                <h3>
-                    Smartphone
-                </h3>
-
-                <p class="business-name">
-                    Example Electronics
-                </p>
-
-                <p class="description">
-                    Quality smartphone available for sale.
-                    Contact the seller for more information.
-                </p>
-
-                <div class="product-bottom">
-
-                    <span class="price">
-                        R2,500
-                    </span>
-
-                    <a
-                        class="whatsapp-btn"
-                        href="https://wa.me/27786701301"
-                        target="_blank">
-
-                        WhatsApp
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- PRODUCT 2 -->
-
-        <article
-            class="product-card"
-            data-category="clothing"
-            data-name="clothing">
-
-            <div class="product-image">
-
-                <img
-                    src="images/clothes.jpg"
-                    alt="Clothing">
-
-                <span class="category">
-                    Clothing
-                </span>
-
-            </div>
-
-            <div class="product-info">
-
-                <h3>
-                    Fashion Clothing
-                </h3>
-
-                <p class="business-name">
-                    Example Fashion
-                </p>
-
-                <p class="description">
-                    Affordable and stylish clothing
-                    available in different sizes.
-                </p>
-
-                <div class="product-bottom">
-
-                    <span class="price">
-                        R350
-                    </span>
-
-                    <a
-                        class="whatsapp-btn"
-                        href="https://wa.me/27786701301"
-                        target="_blank">
-
-                        WhatsApp
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- PRODUCT 3 -->
-
-        <article
-            class="product-card"
-            data-category="food"
-            data-name="food">
-
-            <div class="product-image">
-
-                <img
-                    src="images/food.jpg"
-                    alt="Food">
-
-                <span class="category">
-                    Food
-                </span>
-
-            </div>
-
-            <div class="product-info">
-
-                <h3>
-                    Homemade Food
-                </h3>
-
-                <p class="business-name">
-                    Example Food Business
-                </p>
-
-                <p class="description">
-                    Fresh homemade meals available
-                    for customers and events.
-                </p>
-
-                <div class="product-bottom">
-
-                    <span class="price">
-                        R80
-                    </span>
-
-                    <a
-                        class="whatsapp-btn"
-                        href="https://wa.me/27786701301"
-                        target="_blank">
-
-                        WhatsApp
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- PRODUCT 4 -->
-
-        <article
-            class="product-card"
-            data-category="beauty"
-            data-name="beauty">
-
-            <div class="product-image">
-
-                <img
-                    src="images/beauty.jpg"
-                    alt="Beauty products">
-
-                <span class="category">
-                    Beauty
-                </span>
-
-            </div>
-
-            <div class="product-info">
-
-                <h3>
-                    Beauty Products
-                </h3>
-
-                <p class="business-name">
-                    Example Beauty
-                </p>
-
-                <p class="description">
-                    Quality beauty products available
-                    for customers.
-                </p>
-
-                <div class="product-bottom">
-
-                    <span class="price">
-                        R250
-                    </span>
-
-                    <a
-                        class="whatsapp-btn"
-                        href="https://wa.me/27786701301"
-                        target="_blank">
-
-                        WhatsApp
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-    </div>
-
-
-    <p id="noProducts" class="no-products">
-        No products found.
-    </p>
-
-</section>
-
-
-
-<!-- ================= ADVERTISE ================= -->
-
-<section id="advertise" class="advertise-section">
-
-    <div class="advertise-content">
-
-        <span>
-            WANT TO ADVERTISE?
-        </span>
-
-        <h2>
-            Put your business in front of customers.
-        </h2>
-
-        <p>
-            Advertise your products, services, business,
-            clothing, food, electronics, beauty products
-            and more.
-        </p>
-
-        <a href="#contact" class="btn primary">
-            Advertise With Us
-        </a>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= SERVICES ================= -->
-
-<section id="services" class="section">
-
-    <div class="section-heading">
-
-        <span>BUSINESS SERVICES</span>
-
-        <h2>
-            What can be advertised?
-        </h2>
-
-    </div>
-
-
-    <div class="services-grid">
-
-        <div class="service-card">
-
-            <div class="service-icon">
-                🛍️
-            </div>
-
-            <h3>
-                Products
-            </h3>
-
-            <p>
-                Advertise physical products with
-                photographs, prices and descriptions.
-            </p>
-
-        </div>
-
-
-        <div class="service-card">
-
-            <div class="service-icon">
-                🔧
-            </div>
-
-            <h3>
-                Services
-            </h3>
-
-            <p>
-                Promote your services and allow customers
-                to contact you directly.
-            </p>
-
-        </div>
-
-
-        <div class="service-card">
-
-            <div class="service-icon">
-                🍔
-            </div>
-
-            <h3>
-                Food Businesses
-            </h3>
-
-            <p>
-                Display menus, meals, prices and
-                ordering information.
-            </p>
-
-        </div>
-
-
-        <div class="service-card">
-
-            <div class="service-icon">
-                💼
-            </div>
-
-            <h3>
-                Small Businesses
-            </h3>
-
-            <p>
-                Give small and growing businesses
-                an online advertising presence.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= CONTACT ================= -->
-
-<section id="contact" class="contact-section">
-
-    <div class="contact-container">
-
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+        <a href="#" class="logo">BONGX<span>031</span></a>
+
+        <nav id="navbar">
+            <a href="#marketplace">Marketplace</a>
+            <a href="#advertise">Advertise</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <button class="menu-button" id="menuButton" aria-label="Toggle Menu">&#9776;</button>
+    </header>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
         <div>
-
-            <span>
-                CONTACT BONGX031
-            </span>
-
-            <h2>
-                Advertise your business today.
-            </h2>
-
+            <span class="small-title">BUSINESS ADVERTISING HUB</span>
+            <h1>GROW YOUR <span>BRAND</span> FASTER.</h1>
             <p>
-                Send your business information,
-                product photographs and advertising details.
+                Discover local businesses, products, and services, and connect directly with sellers on WhatsApp.
             </p>
-
+            <div class="hero-buttons">
+                <a href="#marketplace" class="btn primary">Browse Listings</a>
+                <a href="#advertise" class="btn secondary">Advertise With Us</a>
+            </div>
         </div>
 
+        <div class="hero-ad">
+            <div class="ad-label">FEATURED AD</div>
+            <div class="hero-image">🚀</div>
+            <h2>Spotlight Placement</h2>
+            <p>Put your business at the top of BONGX031 and reach buyers every day.</p>
+        </div>
+    </section>
 
-        <form id="contactForm">
+    <!-- ================= SEARCH ================= -->
+    <section class="search-section">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search products, businesses, or services...">
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Food">Food</option>
+                <option value="Services">Services</option>
+            </select>
+            <button type="button" id="searchButton">Search</button>
+        </div>
+    </section>
 
-            <input
-                type="text"
-                id="name"
-                placeholder="Your name"
-                required
-            >
+    <!-- ================= MARKETPLACE ================= -->
+    <section class="section" id="marketplace">
+        <div class="section-heading">
+            <span>MARKETPLACE</span>
+            <h2>Featured Listings</h2>
+            <p>Explore current offers and message businesses directly via WhatsApp.</p>
+        </div>
 
-            <input
-                type="text"
-                id="business"
-                placeholder="Business name"
-                required
-            >
+        <div class="product-grid" id="productGrid">
+            <div class="product-card" data-category="Electronics">
+                <div class="product-image">
+                    <span class="category">Electronics</span>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Wireless Headphones">
+                </div>
+                <div class="product-info">
+                    <h3>Wireless Studio Headphones</h3>
+                    <div class="business-name">031 Sound Lab</div>
+                    <p class="description">Clear audio, comfortable fit, and long battery life for daily use.</p>
+                    <div class="product-bottom">
+                        <span class="price">R1,250</span>
+                        <a href="https://wa.me/27000000000?text=Hi%2C%20I%27m%20interested%20in%20Wireless%20Studio%20Headphones" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
 
-            <input
-                type="email"
-                id="email"
-                placeholder="Email address"
-                required
-            >
+            <div class="product-card" data-category="Fashion">
+                <div class="product-image">
+                    <span class="category">Fashion</span>
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" alt="Streetwear Sneakers">
+                </div>
+                <div class="product-info">
+                    <h3>Streetwear Runners</h3>
+                    <div class="business-name">Bongx Kicks</div>
+                    <p class="description">Everyday comfort sneakers built for casual and street style.</p>
+                    <div class="product-bottom">
+                        <span class="price">R950</span>
+                        <a href="https://wa.me/27000000000?text=Hi%2C%20I%27m%20interested%20in%20Streetwear%20Runners" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
 
-            <textarea
-                id="message"
-                rows="5"
-                placeholder="Tell us about the product or service..."
-                required>
-            </textarea>
+            <div class="product-card" data-category="Food">
+                <div class="product-image">
+                    <span class="category">Food</span>
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Double Burger Meal">
+                </div>
+                <div class="product-info">
+                    <h3>Double Burger Meal</h3>
+                    <div class="business-name">Grill &amp; Co.</div>
+                    <p class="description">Freshly grilled double beef burger served hot and ready to order.</p>
+                    <div class="product-bottom">
+                        <span class="price">R120</span>
+                        <a href="https://wa.me/27000000000?text=Hi%2C%20I%27m%20interested%20in%20Double%20Burger%20Meal" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
 
-            <button
-                type="submit"
-                class="btn primary">
+            <div class="product-card" data-category="Services">
+                <div class="product-image">
+                    <span class="category">Services</span>
+                    <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=600&q=80" alt="Car Detailing Service">
+                </div>
+                <div class="product-info">
+                    <h3>Full Car Valet</h3>
+                    <div class="business-name">CleanShine Auto</div>
+                    <p class="description">Interior and exterior detailing package to keep your vehicle spotless.</p>
+                    <div class="product-bottom">
+                        <span class="price">R450</span>
+                        <a href="https://wa.me/27000000000?text=Hi%2C%20I%27m%20interested%20in%20Full%20Car%20Valet" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                Send Advertisement Request
+        <p class="no-products" id="noProducts">No matching listings found.</p>
+    </section>
 
-            </button>
+    <!-- ================= ADVERTISE ================= -->
+    <section class="advertise-section" id="advertise">
+        <div class="advertise-content">
+            <span>ADVERTISE</span>
+            <h2>Promote Your Business With BONGX031</h2>
+            <p>
+                Get a dedicated listing, category placement, and direct customer inquiries straight to your WhatsApp.
+            </p>
+            <a href="#contact" class="btn primary">Get Started</a>
+        </div>
+    </section>
 
-        </form>
+    <!-- ================= SERVICES ================= -->
+    <section class="section" id="services">
+        <div class="section-heading">
+            <span>SERVICES</span>
+            <h2>How We Help Businesses Grow</h2>
+            <p>Simple advertising options designed for visibility and direct leads.</p>
+        </div>
 
-    </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">📢</div>
+                <h3>Product Listings</h3>
+                <p>Display your items with pricing, photos, and direct WhatsApp links.</p>
+            </div>
 
-</section>
+            <div class="service-card">
+                <div class="service-icon">⭐</div>
+                <h3>Featured Spotlights</h3>
+                <p>Highlight top promotions in prominent sections across the site.</p>
+            </div>
 
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Social Promotion</h3>
+                <p>Share your offers to reach more local followers and buyers.</p>
+            </div>
 
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3>Ad Creatives</h3>
+                <p>Clean promotional banners and product cards tailored to your brand.</p>
+            </div>
+        </div>
+    </section>
 
-<!-- ================= FOOTER ================= -->
+    <!-- ================= CONTACT ================= -->
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <div>
+                <span>CONTACT</span>
+                <h2>Start Your Ad Campaign</h2>
+                <p>
+                    Send your business details and what you want to advertise, and we will follow up with you.
+                </p>
+            </div>
 
-<footer>
+            <form id="contactForm">
+                <input type="text" id="businessName" placeholder="Your Name or Business Name" required>
+                <input type="tel" id="whatsappNumber" placeholder="WhatsApp Number" required>
+                <input type="email" id="emailAddress" placeholder="Email Address" required>
+                <textarea id="message" rows="4" placeholder="What product or service do you want to advertise?" required></textarea>
+                <button type="submit" class="btn primary">Send Inquiry</button>
+            </form>
+        </div>
+    </section>
 
-    <div class="footer-logo">
-        BONGX031
-    </div>
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="footer-logo">BONGX031</div>
+        <p>&copy; 2026 BONGX031 Business Advertising. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#marketplace">Marketplace</a>
+            <a href="#advertise">Advertise</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </footer>
 
-    <p>
-        © <span id="year"></span> BONGX031.
-        Business Advertising Platform.
-    </p>
+    <!-- ================= TOP BUTTON ================= -->
+    <button id="topButton" type="button" aria-label="Back to top">&#8679;</button>
 
-    <div class="footer-links">
+    <script>
+        const menuButton = document.getElementById('menuButton');
+        const navbar = document.getElementById('navbar');
 
-        <a href="#home">
-            Home
-        </a>
+        menuButton.addEventListener('click', () => {
+            navbar.classList.toggle('active');
+        });
 
-        <a href="#products">
-            Products
-        </a>
+        navbar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navbar.classList.remove('active');
+            });
+        });
 
-        <a href="#advertise">
-            Advertise
-        </a>
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const searchButton = document.getElementById('searchButton');
+        const productCards = document.querySelectorAll('.product-card');
+        const noProducts = document.getElementById('noProducts');
 
-    </div>
+        function filterProducts() {
+            const term = searchInput.value.toLowerCase().trim();
+            const category = categoryFilter.value;
+            let matches = 0;
 
-</footer>
+            productCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const cardCategory = card.dataset.category;
+                const show = text.includes(term) && (category === 'all' || cardCategory === category);
 
+                card.style.display = show ? '' : 'none';
+                if (show) matches++;
+            });
 
+            noProducts.style.display = matches === 0 ? 'block' : 'none';
+        }
 
-<!-- ================= BACK TO TOP ================= -->
+        searchInput.addEventListener('input', filterProducts);
+        categoryFilter.addEventListener('change', filterProducts);
+        searchButton.addEventListener('click', filterProducts);
 
-<button id="topButton">
-    ↑
-</button>
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Inquiry submitted.');
+            contactForm.reset();
+        });
 
+        const topButton = document.getElementById('topButton');
+        window.addEventListener('scroll', () => {
+            topButton.style.display = window.scrollY > 400 ? 'block' : 'none';
+        });
 
-<script src="script.js"></script>
+        topButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
 
 </body>
-
 </html>
