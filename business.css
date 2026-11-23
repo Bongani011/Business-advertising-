@@ -1,692 +1,897 @@
-/* =========================================================
-   BONGX031 BUSINESS ADVERTISING
-   MODERN MARKETPLACE DESIGN
-========================================================= */
-
-
-/* ================= RESET ================= */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: inherit;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #ffffff;
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(0, 136, 255, 0.20),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 90% 40%,
-            rgba(0, 102, 255, 0.15),
-            transparent 30%
-        ),
-        #050b16;
-    line-height: 1.6;
-}
-
-img {
-    width: 100%;
-    display: block;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-
-/* ================= HEADER ================= */
-
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 7%;
-    background: rgba(4, 10, 20, 0.92);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.logo {
-    font-size: 1.6rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-}
-
-.logo span {
-    color: #21a7ff;
-}
-
-.header nav {
-    display: flex;
-    gap: 28px;
-}
-
-.header nav a {
-    color: #c6d4e5;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.header nav a:hover {
-    color: #27aaff;
-}
-
-.menu-button {
-    display: none;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.8rem;
-    cursor: pointer;
-}
-
-
-/* ================= HERO ================= */
-
-.hero {
-    min-height: 85vh;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    align-items: center;
-    gap: 60px;
-    padding: 90px 7%;
-}
-
-.small-title {
-    color: #2eb1ff;
-    font-size: 0.8rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-.hero h1 {
-    font-size: clamp(3rem, 7vw, 6rem);
-    line-height: 0.95;
-    margin: 20px 0;
-}
-
-.hero h1 span {
-    color: #21a7ff;
-}
-
-.hero p {
-    max-width: 650px;
-    color: #a9bbce;
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-}
-
-
-/* ================= BUTTONS ================= */
-
-.hero-buttons {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.btn {
-    display: inline-block;
-    padding: 14px 23px;
-    border-radius: 8px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.primary {
-    background: #168fff;
-    color: white;
-    box-shadow: 0 10px 30px rgba(22,143,255,0.25);
-}
-
-.primary:hover {
-    transform: translateY(-3px);
-    background: #36a8ff;
-}
-
-.secondary {
-    background: transparent;
-    border: 1px solid #2378b5;
-    color: #dcecff;
-}
-
-.secondary:hover {
-    background: rgba(22,143,255,0.1);
-}
-
-
-/* ================= HERO AD ================= */
-
-.hero-ad {
-    padding: 30px;
-    border-radius: 22px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(21,143,255,0.18),
-            rgba(255,255,255,0.04)
-        );
-    border: 1px solid rgba(70,175,255,0.25);
-    box-shadow: 0 30px 70px rgba(0,0,0,0.35);
-}
-
-.ad-label {
-    color: #4dbaff;
-    font-size: 0.75rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-}
-
-.hero-image {
-    height: 260px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 7rem;
-    border-radius: 15px;
-    background:
-        linear-gradient(
-            135deg,
-            #102b49,
-            #071322
-        );
-    margin-bottom: 20px;
-}
-
-.hero-ad h2 {
-    font-size: 1.8rem;
-}
-
-.hero-ad p {
-    margin: 5px 0 0;
-    font-size: 0.95rem;
-}
-
-
-/* ================= SEARCH ================= */
-
-.search-section {
-    padding: 30px 7%;
-    background: #071222;
-}
-
-.search-container {
-    max-width: 1100px;
-    margin: auto;
-    display: flex;
-    gap: 10px;
-}
-
-.search-container input,
-.search-container select {
-    padding: 16px;
-    border: 1px solid #243c55;
-    background: #0c1a2b;
-    color: white;
-    border-radius: 7px;
-    outline: none;
-}
-
-.search-container input {
-    flex: 1;
-}
-
-.search-container select {
-    width: 190px;
-}
-
-.search-container input:focus,
-.search-container select:focus {
-    border-color: #1da5ff;
-}
-
-.search-container button {
-    padding: 0 25px;
-    border: none;
-    border-radius: 7px;
-    background: #168fff;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.search-container button:hover {
-    background: #36a8ff;
-}
-
-
-/* ================= SECTIONS ================= */
-
-.section {
-    padding: 100px 7%;
-}
-
-.section-heading {
-    max-width: 750px;
-    margin-bottom: 50px;
-}
-
-.section-heading span,
-.contact-container > div > span,
-.advertise-content > span {
-    color: #27adff;
-    font-size: 0.8rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-.section-heading h2,
-.advertise-content h2,
-.contact-container h2 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    line-height: 1.1;
-    margin: 12px 0;
-}
-
-.section-heading p {
-    color: #9db0c4;
-}
-
-
-/* ================= PRODUCT GRID ================= */
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
-}
-
-
-/* ================= PRODUCT CARD ================= */
-
-.product-card {
-    overflow: hidden;
-    border-radius: 16px;
-    background:
-        linear-gradient(
-            145deg,
-            #0c1d31,
-            #081321
-        );
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: 0.3s;
-}
-
-.product-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(31,166,255,0.6);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-}
-
-
-/* ================= PRODUCT IMAGE ================= */
-
-.product-image {
-    position: relative;
-    height: 240px;
-    overflow: hidden;
-    background: #0c1b2d;
-}
-
-.product-image img {
-    height: 100%;
-    object-fit: cover;
-    transition: 0.5s;
-}
-
-.product-card:hover .product-image img {
-    transform: scale(1.08);
-}
-
-.category {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    padding: 6px 10px;
-    border-radius: 50px;
-    background: rgba(0,0,0,0.75);
-    color: #58c2ff;
-    font-size: 0.7rem;
-    font-weight: bold;
-}
-
-
-/* ================= PRODUCT INFO ================= */
-
-.product-info {
-    padding: 20px;
-}
-
-.product-info h3 {
-    font-size: 1.2rem;
-    margin-bottom: 4px;
-}
-
-.business-name {
-    color: #32aeff;
-    font-size: 0.85rem;
-    font-weight: bold;
-}
-
-.description {
-    color: #91a6bb;
-    font-size: 0.9rem;
-    margin: 12px 0 20px;
-}
-
-.product-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-}
-
-.price {
-    color: white;
-    font-size: 1.3rem;
-    font-weight: 900;
-}
-
-.whatsapp-btn {
-    padding: 9px 13px;
-    border-radius: 6px;
-    background: #20b957;
-    color: white;
-    font-size: 0.8rem;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.whatsapp-btn:hover {
-    background: #28d465;
-    transform: translateY(-2px);
-}
-
-
-/* ================= NO PRODUCTS ================= */
-
-.no-products {
-    display: none;
-    text-align: center;
-    color: #ff9c9c;
-    margin-top: 30px;
-}
-
-
-/* ================= ADVERTISE ================= */
-
-.advertise-section {
-    padding: 100px 7%;
-    background:
-        linear-gradient(
-            135deg,
-            #0d4270,
-            #071426 60%
-        );
-}
-
-.advertise-content {
-    max-width: 800px;
-}
-
-.advertise-content p {
-    color: #c2d2e2;
-    margin: 20px 0 30px;
-}
-
-
-/* ================= SERVICES ================= */
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.service-card {
-    padding: 30px;
-    border-radius: 16px;
-    background: rgba(255,255,255,0.035);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: 0.3s;
-}
-
-.service-card:hover {
-    transform: translateY(-6px);
-    border-color: #218fdb;
-}
-
-.service-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.service-card h3 {
-    margin-bottom: 10px;
-}
-
-.service-card p {
-    color: #96aabd;
-    font-size: 0.9rem;
-}
-
-
-/* ================= CONTACT ================= */
-
-.contact-section {
-    padding: 100px 7%;
-    background:
-        radial-gradient(
-            circle at 80% 50%,
-            rgba(22,143,255,0.16),
-            transparent 40%
-        );
-}
-
-.contact-container {
-    max-width: 1100px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-}
-
-.contact-container p {
-    color: #9fb2c6;
-    margin-top: 15px;
-}
-
-#contactForm {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 30px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.09);
-    border-radius: 16px;
-}
-
-#contactForm input,
-#contactForm textarea {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #2b435b;
-    border-radius: 7px;
-    background: #0b192a;
-    color: white;
-    outline: none;
-    resize: vertical;
-}
-
-#contactForm input:focus,
-#contactForm textarea:focus {
-    border-color: #21a7ff;
-}
-
-
-/* ================= FOOTER ================= */
-
-footer {
-    padding: 35px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-.footer-logo {
-    color: #28aaff;
-    font-weight: 900;
-    font-size: 1.4rem;
-}
-
-footer p {
-    color: #70869d;
-}
-
-.footer-links {
-    display: flex;
-    gap: 20px;
-}
-
-.footer-links a {
-    color: #8fa4ba;
-}
-
-.footer-links a:hover {
-    color: #2baeff;
-}
-
-
-/* ================= TOP BUTTON ================= */
-
-#topButton {
-    position: fixed;
-    right: 25px;
-    bottom: 25px;
-    width: 45px;
-    height: 45px;
-    display: none;
-    border: none;
-    border-radius: 50%;
-    background: #168fff;
-    color: white;
-    font-size: 1.3rem;
-    cursor: pointer;
-    z-index: 500;
-}
-
-
-/* ================= TABLET / SMALL DESKTOP ================= */
-
-@media (max-width: 1000px) {
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .hero {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-/* ================= MOBILE NAVIGATION & LAYOUT ================= */
-
-@media (max-width: 750px) {
-    .header nav {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        display: none;
-        flex-direction: column;
-        padding: 20px 7%;
-        background: #071222;
-        border-top: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .header nav.active {
-        display: flex;
-    }
-
-    .menu-button {
-        display: block;
-    }
-
-    .search-container {
-        flex-direction: column;
-    }
-
-    .search-container select {
-        width: 100%;
-    }
-
-    .search-container button {
-        padding: 15px;
-    }
-
-    .contact-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-/* ================= PHONE ================= */
-
-@media (max-width: 550px) {
-    .hero {
-        padding: 65px 5%;
-    }
-
-    .section {
-        padding: 75px 5%;
-    }
-
-    .hero h1 {
-        font-size: 3.2rem;
-    }
-
-    .product-grid,
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-image {
-        height: 210px;
-    }
-
-    .product-image {
-        height: 260px;
-    }
-
-    footer {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-}
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="BONGX031 Business Advertising - Discover products, services and businesses. Advertise your business and reach more customers.">
+
+    <meta name="keywords"
+          content="BONGX031, business advertising, marketplace, South Africa, products, services, businesses">
+
+    <meta name="author"
+          content="BONGX031">
+
+    <title>BONGX031 | Business Advertising Marketplace</title>
+
+    <!-- ================= CSS ================= -->
+    <link rel="stylesheet" href="business.css">
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script src="business.js" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER / NAVIGATION
+===================================================== -->
+
+<header class="header">
+
+    <a href="#home" class="logo">
+        BONGX<span>031</span>
+    </a>
+
+    <button class="menu-button"
+            id="menuButton"
+            aria-label="Open navigation menu">
+        ☰
+    </button>
+
+    <nav id="navMenu">
+
+        <a href="#home">Home</a>
+
+        <a href="#marketplace">Marketplace</a>
+
+        <a href="#advertise">Advertise</a>
+
+        <a href="#services">Services</a>
+
+        <a href="#contact">Contact</a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO SECTION
+===================================================== -->
+
+<main>
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <span class="small-title">
+            BONGX031 BUSINESS ADVERTISING
+        </span>
+
+        <h1>
+            Discover.
+            <span>Advertise.</span>
+            Grow.
+        </h1>
+
+        <p>
+            BONGX031 connects customers with businesses,
+            products and services. Discover what people are
+            selling and give your business the opportunity
+            to reach more customers.
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a href="#marketplace"
+               class="btn primary">
+                Explore Marketplace
+            </a>
+
+            <a href="#advertise"
+               class="btn secondary">
+                Advertise Your Business
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= HERO AD ================= -->
+
+    <div class="hero-ad">
+
+        <div class="ad-label">
+            FEATURED ADVERTISEMENT
+        </div>
+
+        <div class="hero-image">
+
+            <span>🛍️</span>
+
+        </div>
+
+        <h2>
+            Promote Your Business
+        </h2>
+
+        <p>
+            Put your products and services in front
+            of potential customers.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SEARCH SECTION
+===================================================== -->
+
+<section class="search-section">
+
+    <div class="search-container">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products, businesses or services..."
+            aria-label="Search marketplace">
+
+
+        <select id="categoryFilter"
+                aria-label="Select category">
+
+            <option value="all">
+                All Categories
+            </option>
+
+            <option value="fashion">
+                Fashion
+            </option>
+
+            <option value="electronics">
+                Electronics
+            </option>
+
+            <option value="food">
+                Food
+            </option>
+
+            <option value="beauty">
+                Beauty
+            </option>
+
+            <option value="services">
+                Services
+            </option>
+
+            <option value="home">
+                Home & Furniture
+            </option>
+
+            <option value="automotive">
+                Automotive
+            </option>
+
+            <option value="other">
+                Other
+            </option>
+
+        </select>
+
+
+        <button id="searchButton"
+                type="button">
+            Search
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MARKETPLACE
+===================================================== -->
+
+<section class="section"
+         id="marketplace">
+
+    <div class="section-heading">
+
+        <span>
+            MARKETPLACE
+        </span>
+
+        <h2>
+            Discover Products
+        </h2>
+
+        <p>
+            Browse products and services advertised by
+            businesses and individuals.
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= PRODUCT GRID ================= -->
+
+    <div class="product-grid"
+         id="productGrid">
+
+
+        <!-- PRODUCT 1 -->
+
+        <article class="product-card"
+                 data-category="fashion"
+                 data-name="running shoes"
+                 data-business="bongani sports">
+
+            <div class="product-image">
+
+                <img src="images/shoes.jpg"
+                     alt="Running shoes"
+                     onerror="this.src='https://via.placeholder.com/600x400?text=Running+Shoes';">
+
+                <span class="category">
+                    Fashion
+                </span>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <h3>
+                    Running Shoes
+                </h3>
+
+                <p class="business-name">
+                    Bongani Sports
+                </p>
+
+                <p class="description">
+                    Quality running shoes available
+                    in different sizes and styles.
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        R650
+                    </span>
+
+                    <a class="whatsapp-btn"
+                       href="https://wa.me/27786701301?text=Hello%20Bongani%20Sports,%20I%20am%20interested%20in%20the%20Running%20Shoes."
+                       target="_blank"
+                       rel="noopener">
+                        WhatsApp
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 2 -->
+
+        <article class="product-card"
+                 data-category="electronics"
+                 data-name="smartphone"
+                 data-business="bongx electronics">
+
+            <div class="product-image">
+
+                <img src="images/phone.jpg"
+                     alt="Smartphone"
+                     onerror="this.src='https://via.placeholder.com/600x400?text=Smartphone';">
+
+                <span class="category">
+                    Electronics
+                </span>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <h3>
+                    Smartphone
+                </h3>
+
+                <p class="business-name">
+                    BONGX Electronics
+                </p>
+
+                <p class="description">
+                    Affordable smartphones and
+                    accessories available.
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        R2,499
+                    </span>
+
+                    <a class="whatsapp-btn"
+                       href="https://wa.me/27786701301?text=Hello,%20I%20am%20interested%20in%20the%20Smartphone."
+                       target="_blank"
+                       rel="noopener">
+                        WhatsApp
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 3 -->
+
+        <article class="product-card"
+                 data-category="food"
+                 data-name="homemade food"
+                 data-business="local kitchen">
+
+            <div class="product-image">
+
+                <img src="images/food.jpg"
+                     alt="Homemade food"
+                     onerror="this.src='https://via.placeholder.com/600x400?text=Homemade+Food';">
+
+                <span class="category">
+                    Food
+                </span>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <h3>
+                    Homemade Food
+                </h3>
+
+                <p class="business-name">
+                    Local Kitchen
+                </p>
+
+                <p class="description">
+                    Fresh homemade meals prepared
+                    for customers and events.
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        From R80
+                    </span>
+
+                    <a class="whatsapp-btn"
+                       href="https://wa.me/27786701301?text=Hello,%20I%20am%20interested%20in%20the%20Homemade%20Food."
+                       target="_blank"
+                       rel="noopener">
+                        WhatsApp
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 4 -->
+
+        <article class="product-card"
+                 data-category="home"
+                 data-name="modern furniture"
+                 data-business="bongx furniture">
+
+            <div class="product-image">
+
+                <img src="images/furniture.jpg"
+                     alt="Modern furniture"
+                     onerror="this.src='https://via.placeholder.com/600x400?text=Furniture';">
+
+                <span class="category">
+                    Home
+                </span>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <h3>
+                    Modern Furniture
+                </h3>
+
+                <p class="business-name">
+                    BONGX Furniture
+                </p>
+
+                <p class="description">
+                    Modern furniture for homes,
+                    offices and businesses.
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        From R1,200
+                    </span>
+
+                    <a class="whatsapp-btn"
+                       href="https://wa.me/27786701301?text=Hello,%20I%20am%20interested%20in%20the%20Modern%20Furniture."
+                       target="_blank"
+                       rel="noopener">
+                        WhatsApp
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+    </div>
+
+
+    <!-- ================= NO RESULTS ================= -->
+
+    <p class="no-products"
+       id="noProducts">
+
+        No products or businesses were found.
+
+        <br>
+
+        Try another search or category.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     ADVERTISE SECTION
+===================================================== -->
+
+<section class="advertise-section"
+         id="advertise">
+
+    <div class="advertise-content">
+
+        <span>
+            GROW YOUR BUSINESS
+        </span>
+
+        <h2>
+            Advertise Your Business on BONGX031
+        </h2>
+
+        <p>
+            Do you sell products or offer services?
+
+            Showcase your business, products and services
+            to potential customers through BONGX031.
+
+            Add your business information, product images,
+            prices and contact details.
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a href="#contact"
+               class="btn primary">
+                Submit Your Advertisement
+            </a>
+
+            <a href="#marketplace"
+               class="btn secondary">
+                View Marketplace
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+
+<section class="section"
+         id="services">
+
+    <div class="section-heading">
+
+        <span>
+            OUR SERVICES
+        </span>
+
+        <h2>
+            Everything You Need to Promote
+        </h2>
+
+        <p>
+            BONGX031 provides a platform for businesses,
+            entrepreneurs and individuals to showcase
+            what they offer.
+        </p>
+
+    </div>
+
+
+    <div class="services-grid">
+
+
+        <!-- SERVICE 1 -->
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                📢
+            </div>
+
+            <h3>
+                Business Advertising
+            </h3>
+
+            <p>
+                Promote your business and make your
+                products or services visible to more
+                potential customers.
+            </p>
+
+        </div>
+
+
+
+        <!-- SERVICE 2 -->
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🛍️
+            </div>
+
+            <h3>
+                Product Listings
+            </h3>
+
+            <p>
+                Showcase products with images,
+                descriptions, prices and direct
+                customer contact.
+            </p>
+
+        </div>
+
+
+
+        <!-- SERVICE 3 -->
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                📱
+            </div>
+
+            <h3>
+                WhatsApp Contact
+            </h3>
+
+            <p>
+                Allow customers to contact businesses
+                directly through WhatsApp.
+            </p>
+
+        </div>
+
+
+
+        <!-- SERVICE 4 -->
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🚀
+            </div>
+
+            <h3>
+                Business Growth
+            </h3>
+
+            <p>
+                Give your business an online presence
+                and create new opportunities to reach
+                customers.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CONTACT / ADVERTISEMENT FORM
+===================================================== -->
+
+<section class="contact-section"
+         id="contact">
+
+    <div class="contact-container">
+
+
+        <!-- CONTACT INFORMATION -->
+
+        <div>
+
+            <span>
+                CONTACT BONGX031
+            </span>
+
+            <h2>
+                Ready to Advertise?
+            </h2>
+
+            <p>
+                Submit your business information and
+                tell us what you want to advertise.
+            </p>
+
+            <p>
+                We can help showcase your products,
+                services and business to potential
+                customers.
+            </p>
+
+            <p>
+                <strong>
+                    Email:
+                </strong>
+
+                bonganinkhensani@gmail.com
+            </p>
+
+            <p>
+                <strong>
+                    WhatsApp:
+                </strong>
+
+                078 670 1301
+            </p>
+
+        </div>
+
+
+
+        <!-- ADVERTISEMENT FORM -->
+
+        <form id="contactForm">
+
+
+            <input
+                type="text"
+                id="businessName"
+                name="businessName"
+                placeholder="Business name"
+                required>
+
+
+            <input
+                type="text"
+                id="ownerName"
+                name="ownerName"
+                placeholder="Your name"
+                required>
+
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email address"
+                required>
+
+
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="WhatsApp / phone number"
+                required>
+
+
+            <select
+                id="businessCategory"
+                name="businessCategory"
+                required>
+
+                <option value="">
+                    Select business category
+                </option>
+
+                <option value="fashion">
+                    Fashion
+                </option>
+
+                <option value="electronics">
+                    Electronics
+                </option>
+
+                <option value="food">
+                    Food
+                </option>
+
+                <option value="beauty">
+                    Beauty
+                </option>
+
+                <option value="services">
+                    Services
+                </option>
+
+                <option value="home">
+                    Home & Furniture
+                </option>
+
+                <option value="automotive">
+                    Automotive
+                </option>
+
+                <option value="other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <input
+                type="text"
+                id="productName"
+                name="productName"
+                placeholder="Product or service name"
+                required>
+
+
+            <input
+                type="text"
+                id="price"
+                name="price"
+                placeholder="Price (e.g. R500)">
+
+
+            <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Tell us about your business or advertisement..."
+                required></textarea>
+
+
+            <button
+                type="submit"
+                class="btn primary">
+
+                Submit Advertisement
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div>
+
+        <div class="footer-logo">
+            BONGX031
+        </div>
+
+        <p>
+            Business advertising made simple.
+        </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#marketplace">
+            Marketplace
+        </a>
+
+        <a href="#advertise">
+            Advertise
+        </a>
+
+        <a href="#contact">
+            Contact
+        </a>
+
+    </div>
+
+
+    <p>
+        © <span id="year"></span>
+        BONGX031. All rights reserved.
+    </p>
+
+</footer>
+
+
+
+<!-- =====================================================
+     BACK TO TOP BUTTON
+===================================================== -->
+
+<button id="topButton"
+        aria-label="Back to top">
+
+    ↑
+
+</button>
+
+
+</body>
+</html>
+```
