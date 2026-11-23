@@ -1,692 +1,841 @@
 /* =========================================================
    BONGX031 BUSINESS ADVERTISING
-   MODERN MARKETPLACE DESIGN
+   SUPABASE BUSINESS + IMAGE STORAGE SYSTEM
 ========================================================= */
 
 
-/* ================= RESET ================= */
+/* =========================================================
+   1. SUPABASE CONFIGURATION
+========================================================= */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: inherit;
-}
+// Replace these two values with your own Supabase details.
 
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #ffffff;
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(0, 136, 255, 0.20),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 90% 40%,
-            rgba(0, 102, 255, 0.15),
-            transparent 30%
-        ),
-        #050b16;
-    line-height: 1.6;
-}
-
-img {
-    width: 100%;
-    display: block;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
+const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 
 
-/* ================= HEADER ================= */
+/* =========================================================
+   2. CONNECT TO SUPABASE
+========================================================= */
 
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 7%;
-    background: rgba(4, 10, 20, 0.92);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
+const { createClient } = supabase;
 
-.logo {
-    font-size: 1.6rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-}
-
-.logo span {
-    color: #21a7ff;
-}
-
-.header nav {
-    display: flex;
-    gap: 28px;
-}
-
-.header nav a {
-    color: #c6d4e5;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.header nav a:hover {
-    color: #27aaff;
-}
-
-.menu-button {
-    display: none;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.8rem;
-    cursor: pointer;
-}
+const db = createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
 
 
-/* ================= HERO ================= */
+/* =========================================================
+   3. HTML ELEMENTS
+========================================================= */
 
-.hero {
-    min-height: 85vh;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    align-items: center;
-    gap: 60px;
-    padding: 90px 7%;
-}
+const advertisementForm =
+    document.getElementById("advertisementForm");
 
-.small-title {
-    color: #2eb1ff;
-    font-size: 0.8rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
+const imageInput =
+    document.getElementById("businessImage");
 
-.hero h1 {
-    font-size: clamp(3rem, 7vw, 6rem);
-    line-height: 0.95;
-    margin: 20px 0;
-}
+const imagePreview =
+    document.getElementById("imagePreview");
 
-.hero h1 span {
-    color: #21a7ff;
-}
+const productGrid =
+    document.getElementById("productGrid");
 
-.hero p {
-    max-width: 650px;
-    color: #a9bbce;
-    font-size: 1.1rem;
-    margin-bottom: 30px;
+const searchInput =
+    document.getElementById("searchInput");
+
+const categoryFilter =
+    document.getElementById("categoryFilter");
+
+const submitButton =
+    document.getElementById("submitAdvertisement");
+
+
+/* =========================================================
+   4. IMAGE PREVIEW
+========================================================= */
+
+if (imageInput) {
+
+    imageInput.addEventListener("change", function () {
+
+        const file = this.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        // Check file type
+        if (!file.type.startsWith("image/")) {
+
+            alert("Please select a valid image.");
+
+            this.value = "";
+
+            return;
+        }
+
+
+        // Check file size
+        // Maximum = 5 MB
+
+        const maxSize = 5 * 1024 * 1024;
+
+        if (file.size > maxSize) {
+
+            alert("Image must be smaller than 5 MB.");
+
+            this.value = "";
+
+            return;
+        }
+
+
+        // Create preview
+
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+
+            if (imagePreview) {
+
+                imagePreview.src = event.target.result;
+
+                imagePreview.style.display = "block";
+            }
+        };
+
+        reader.readAsDataURL(file);
+    });
 }
 
 
-/* ================= BUTTONS ================= */
+/* =========================================================
+   5. UPLOAD IMAGE TO SUPABASE STORAGE
+========================================================= */
 
-.hero-buttons {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
+async function uploadBusinessImage(file) {
 
-.btn {
-    display: inline-block;
-    padding: 14px 23px;
-    border-radius: 8px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.primary {
-    background: #168fff;
-    color: white;
-    box-shadow: 0 10px 30px rgba(22,143,255,0.25);
-}
-
-.primary:hover {
-    transform: translateY(-3px);
-    background: #36a8ff;
-}
-
-.secondary {
-    background: transparent;
-    border: 1px solid #2378b5;
-    color: #dcecff;
-}
-
-.secondary:hover {
-    background: rgba(22,143,255,0.1);
-}
+    if (!file) {
+        throw new Error("No image selected.");
+    }
 
 
-/* ================= HERO AD ================= */
+    /*
+       Create a unique filename.
 
-.hero-ad {
-    padding: 30px;
-    border-radius: 22px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(21,143,255,0.18),
-            rgba(255,255,255,0.04)
+       Example:
+
+       fashion/
+       1732456789123-shoes.jpg
+    */
+
+    const fileExtension =
+        file.name.split(".").pop();
+
+    const uniqueName =
+        Date.now() +
+        "-" +
+        Math.random().toString(36).substring(2) +
+        "." +
+        fileExtension;
+
+
+    const category =
+        document.getElementById("businessCategory")?.value ||
+        "other";
+
+
+    const filePath =
+        category.toLowerCase().replace(/\s+/g, "-") +
+        "/" +
+        uniqueName;
+
+
+    /*
+       Upload image to Supabase Storage.
+
+       Bucket name:
+       business-images
+    */
+
+    const { error } = await db
+        .storage
+        .from("business-images")
+        .upload(filePath, file, {
+            cacheControl: "3600",
+            upsert: false
+        });
+
+
+    if (error) {
+
+        console.error("Image upload error:", error);
+
+        throw new Error(
+            "Image could not be uploaded: " +
+            error.message
         );
-    border: 1px solid rgba(70,175,255,0.25);
-    box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+    }
+
+
+    /*
+       Get public URL of uploaded image
+    */
+
+    const { data } = db
+        .storage
+        .from("business-images")
+        .getPublicUrl(filePath);
+
+
+    return data.publicUrl;
 }
 
-.ad-label {
-    color: #4dbaff;
-    font-size: 0.75rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
+
+/* =========================================================
+   6. SAVE BUSINESS ADVERTISEMENT
+========================================================= */
+
+if (advertisementForm) {
+
+    advertisementForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            /* -----------------------------------------
+               GET FORM VALUES
+            ----------------------------------------- */
+
+            const businessName =
+                document.getElementById("businessName")?.value.trim();
+
+            const category =
+                document.getElementById("businessCategory")?.value;
+
+            const productName =
+                document.getElementById("productName")?.value.trim();
+
+            const description =
+                document.getElementById("description")?.value.trim();
+
+            const price =
+                document.getElementById("price")?.value.trim();
+
+            const whatsapp =
+                document.getElementById("whatsapp")?.value.trim();
+
+            const location =
+                document.getElementById("location")?.value.trim();
+
+            const image =
+                document.getElementById("businessImage")?.files[0];
+
+
+            /* -----------------------------------------
+               VALIDATION
+            ----------------------------------------- */
+
+            if (!businessName ||
+                !category ||
+                !productName ||
+                !description ||
+                !price ||
+                !whatsapp ||
+                !location ||
+                !image) {
+
+                alert(
+                    "Please complete all fields and select a business image."
+                );
+
+                return;
+            }
+
+
+            /* -----------------------------------------
+               CHANGE BUTTON
+            ----------------------------------------- */
+
+            if (submitButton) {
+
+                submitButton.disabled = true;
+
+                submitButton.textContent =
+                    "Uploading advertisement...";
+            }
+
+
+            try {
+
+                /* -------------------------------------
+                   UPLOAD IMAGE
+                ------------------------------------- */
+
+                const imageURL =
+                    await uploadBusinessImage(image);
+
+
+                /* -------------------------------------
+                   SAVE BUSINESS INFORMATION
+                ------------------------------------- */
+
+                const { error } = await db
+                    .from("businesses")
+                    .insert([
+                        {
+                            business_name: businessName,
+
+                            category: category,
+
+                            product_name: productName,
+
+                            description: description,
+
+                            price: price,
+
+                            whatsapp: whatsapp,
+
+                            location: location,
+
+                            image_url: imageURL
+                        }
+                    ]);
+
+
+                /* -------------------------------------
+                   DATABASE ERROR
+                ------------------------------------- */
+
+                if (error) {
+
+                    console.error(
+                        "Database error:",
+                        error
+                    );
+
+                    throw new Error(
+                        "Advertisement could not be saved: " +
+                        error.message
+                    );
+                }
+
+
+                /* -------------------------------------
+                   SUCCESS
+                ------------------------------------- */
+
+                alert(
+                    "Advertisement successfully published!"
+                );
+
+
+                /* Clear form */
+
+                advertisementForm.reset();
+
+
+                /* Hide preview */
+
+                if (imagePreview) {
+
+                    imagePreview.src = "";
+
+                    imagePreview.style.display = "none";
+                }
+
+
+                /* Reload advertisements */
+
+                await loadAdvertisements();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    error.message ||
+                    "Something went wrong while saving the advertisement."
+                );
+
+
+            } finally {
+
+                if (submitButton) {
+
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        "Publish Advertisement";
+                }
+            }
+        }
+    );
 }
 
-.hero-image {
-    height: 260px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 7rem;
-    border-radius: 15px;
-    background:
-        linear-gradient(
-            135deg,
-            #102b49,
-            #071322
+
+/* =========================================================
+   7. LOAD ADVERTISEMENTS
+========================================================= */
+
+async function loadAdvertisements() {
+
+    if (!productGrid) {
+        return;
+    }
+
+
+    productGrid.innerHTML = `
+        <div class="loading">
+            Loading advertisements...
+        </div>
+    `;
+
+
+    const { data, error } = await db
+        .from("businesses")
+        .select("*")
+        .order("created_at", {
+            ascending: false
+        });
+
+
+    if (error) {
+
+        console.error(
+            "Could not load advertisements:",
+            error
         );
-    margin-bottom: 20px;
-}
-
-.hero-ad h2 {
-    font-size: 1.8rem;
-}
-
-.hero-ad p {
-    margin: 5px 0 0;
-    font-size: 0.95rem;
-}
 
 
-/* ================= SEARCH ================= */
+        productGrid.innerHTML = `
+            <div class="no-products">
+                <h3>Advertisements could not be loaded</h3>
+                <p>Please check your Supabase connection.</p>
+            </div>
+        `;
 
-.search-section {
-    padding: 30px 7%;
-    background: #071222;
-}
+        return;
+    }
 
-.search-container {
-    max-width: 1100px;
-    margin: auto;
-    display: flex;
-    gap: 10px;
-}
 
-.search-container input,
-.search-container select {
-    padding: 16px;
-    border: 1px solid #243c55;
-    background: #0c1a2b;
-    color: white;
-    border-radius: 7px;
-    outline: none;
-}
-
-.search-container input {
-    flex: 1;
-}
-
-.search-container select {
-    width: 190px;
-}
-
-.search-container input:focus,
-.search-container select:focus {
-    border-color: #1da5ff;
-}
-
-.search-container button {
-    padding: 0 25px;
-    border: none;
-    border-radius: 7px;
-    background: #168fff;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.search-container button:hover {
-    background: #36a8ff;
+    displayAdvertisements(data);
 }
 
 
-/* ================= SECTIONS ================= */
+/* =========================================================
+   8. DISPLAY ADVERTISEMENTS
+========================================================= */
 
-.section {
-    padding: 100px 7%;
+function displayAdvertisements(advertisements) {
+
+    if (!productGrid) {
+        return;
+    }
+
+
+    productGrid.innerHTML = "";
+
+
+    if (!advertisements ||
+        advertisements.length === 0) {
+
+        productGrid.innerHTML = `
+            <div class="no-products">
+
+                <h3>No advertisements found</h3>
+
+                <p>
+                    Be the first business to advertise
+                    on BONGX031.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    advertisements.forEach(function (business) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "product-card";
+
+
+        /*
+           Convert WhatsApp number into
+           a WhatsApp URL.
+        */
+
+        let whatsappNumber =
+            business.whatsapp
+                .replace(/\D/g, "");
+
+
+        /*
+           South African numbers:
+
+           0786701301
+
+           becomes:
+
+           27786701301
+        */
+
+        if (
+            whatsappNumber.startsWith("0")
+        ) {
+
+            whatsappNumber =
+                "27" +
+                whatsappNumber.substring(1);
+        }
+
+
+        const whatsappMessage =
+            encodeURIComponent(
+                "Hello, I am interested in " +
+                business.product_name +
+                " advertised on BONGX031."
+            );
+
+
+        const whatsappURL =
+            `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
+
+        /* -----------------------------------------
+           CREATE CARD
+        ----------------------------------------- */
+
+        card.innerHTML = `
+
+            <div class="product-image">
+
+                <img
+                    src="${business.image_url}"
+                    alt="${escapeHTML(
+                        business.product_name
+                    )}"
+                    loading="lazy"
+                >
+
+                <span class="category">
+                    ${escapeHTML(
+                        business.category
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <h3 class="business-name">
+                    ${escapeHTML(
+                        business.business_name
+                    )}
+                </h3>
+
+
+                <h4>
+                    ${escapeHTML(
+                        business.product_name
+                    )}
+                </h4>
+
+
+                <p class="description">
+                    ${escapeHTML(
+                        business.description
+                    )}
+                </p>
+
+
+                <p class="location">
+                    📍 ${escapeHTML(
+                        business.location
+                    )}
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        R${escapeHTML(
+                            business.price
+                        )}
+                    </span>
+
+
+                    <a
+                        href="${whatsappURL}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="whatsapp-btn"
+                    >
+                        WhatsApp
+                    </a>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        productGrid.appendChild(card);
+    });
 }
 
-.section-heading {
-    max-width: 750px;
-    margin-bottom: 50px;
-}
 
-.section-heading span,
-.contact-container > div > span,
-.advertise-content > span {
-    color: #27adff;
-    font-size: 0.8rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
+/* =========================================================
+   9. SEARCH ADVERTISEMENTS
+========================================================= */
 
-.section-heading h2,
-.advertise-content h2,
-.contact-container h2 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    line-height: 1.1;
-    margin: 12px 0;
-}
+async function searchAdvertisements() {
 
-.section-heading p {
-    color: #9db0c4;
-}
+    const search =
+        searchInput?.value.trim().toLowerCase() || "";
+
+    const category =
+        categoryFilter?.value || "";
 
 
-/* ================= PRODUCT GRID ================= */
+    let query =
+        db
+            .from("businesses")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
 
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
-}
+
+    /* -----------------------------------------
+       CATEGORY FILTER
+    ----------------------------------------- */
+
+    if (category) {
+
+        query =
+            query.eq(
+                "category",
+                category
+            );
+    }
 
 
-/* ================= PRODUCT CARD ================= */
+    const { data, error } =
+        await query;
 
-.product-card {
-    overflow: hidden;
-    border-radius: 16px;
-    background:
-        linear-gradient(
-            145deg,
-            #0c1d31,
-            #081321
+
+    if (error) {
+
+        console.error(
+            "Search error:",
+            error
         );
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: 0.3s;
-}
 
-.product-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(31,166,255,0.6);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-}
-
-
-/* ================= PRODUCT IMAGE ================= */
-
-.product-image {
-    position: relative;
-    height: 240px;
-    overflow: hidden;
-    background: #0c1b2d;
-}
-
-.product-image img {
-    height: 100%;
-    object-fit: cover;
-    transition: 0.5s;
-}
-
-.product-card:hover .product-image img {
-    transform: scale(1.08);
-}
-
-.category {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    padding: 6px 10px;
-    border-radius: 50px;
-    background: rgba(0,0,0,0.75);
-    color: #58c2ff;
-    font-size: 0.7rem;
-    font-weight: bold;
-}
-
-
-/* ================= PRODUCT INFO ================= */
-
-.product-info {
-    padding: 20px;
-}
-
-.product-info h3 {
-    font-size: 1.2rem;
-    margin-bottom: 4px;
-}
-
-.business-name {
-    color: #32aeff;
-    font-size: 0.85rem;
-    font-weight: bold;
-}
-
-.description {
-    color: #91a6bb;
-    font-size: 0.9rem;
-    margin: 12px 0 20px;
-}
-
-.product-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-}
-
-.price {
-    color: white;
-    font-size: 1.3rem;
-    font-weight: 900;
-}
-
-.whatsapp-btn {
-    padding: 9px 13px;
-    border-radius: 6px;
-    background: #20b957;
-    color: white;
-    font-size: 0.8rem;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.whatsapp-btn:hover {
-    background: #28d465;
-    transform: translateY(-2px);
-}
-
-
-/* ================= NO PRODUCTS ================= */
-
-.no-products {
-    display: none;
-    text-align: center;
-    color: #ff9c9c;
-    margin-top: 30px;
-}
-
-
-/* ================= ADVERTISE ================= */
-
-.advertise-section {
-    padding: 100px 7%;
-    background:
-        linear-gradient(
-            135deg,
-            #0d4270,
-            #071426 60%
-        );
-}
-
-.advertise-content {
-    max-width: 800px;
-}
-
-.advertise-content p {
-    color: #c2d2e2;
-    margin: 20px 0 30px;
-}
-
-
-/* ================= SERVICES ================= */
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.service-card {
-    padding: 30px;
-    border-radius: 16px;
-    background: rgba(255,255,255,0.035);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: 0.3s;
-}
-
-.service-card:hover {
-    transform: translateY(-6px);
-    border-color: #218fdb;
-}
-
-.service-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.service-card h3 {
-    margin-bottom: 10px;
-}
-
-.service-card p {
-    color: #96aabd;
-    font-size: 0.9rem;
-}
-
-
-/* ================= CONTACT ================= */
-
-.contact-section {
-    padding: 100px 7%;
-    background:
-        radial-gradient(
-            circle at 80% 50%,
-            rgba(22,143,255,0.16),
-            transparent 40%
-        );
-}
-
-.contact-container {
-    max-width: 1100px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-}
-
-.contact-container p {
-    color: #9fb2c6;
-    margin-top: 15px;
-}
-
-#contactForm {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 30px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.09);
-    border-radius: 16px;
-}
-
-#contactForm input,
-#contactForm textarea {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #2b435b;
-    border-radius: 7px;
-    background: #0b192a;
-    color: white;
-    outline: none;
-    resize: vertical;
-}
-
-#contactForm input:focus,
-#contactForm textarea:focus {
-    border-color: #21a7ff;
-}
-
-
-/* ================= FOOTER ================= */
-
-footer {
-    padding: 35px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-.footer-logo {
-    color: #28aaff;
-    font-weight: 900;
-    font-size: 1.4rem;
-}
-
-footer p {
-    color: #70869d;
-}
-
-.footer-links {
-    display: flex;
-    gap: 20px;
-}
-
-.footer-links a {
-    color: #8fa4ba;
-}
-
-.footer-links a:hover {
-    color: #2baeff;
-}
-
-
-/* ================= TOP BUTTON ================= */
-
-#topButton {
-    position: fixed;
-    right: 25px;
-    bottom: 25px;
-    width: 45px;
-    height: 45px;
-    display: none;
-    border: none;
-    border-radius: 50%;
-    background: #168fff;
-    color: white;
-    font-size: 1.3rem;
-    cursor: pointer;
-    z-index: 500;
-}
-
-
-/* ================= TABLET / SMALL DESKTOP ================= */
-
-@media (max-width: 1000px) {
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
+        return;
     }
 
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
+
+    /* -----------------------------------------
+       TEXT SEARCH
+    ----------------------------------------- */
+
+    let results = data;
+
+
+    if (search) {
+
+        results =
+            data.filter(function (business) {
+
+                const searchableText = `
+
+                    ${business.business_name}
+
+                    ${business.product_name}
+
+                    ${business.description}
+
+                    ${business.category}
+
+                    ${business.location}
+
+                `.toLowerCase();
+
+
+                return searchableText.includes(
+                    search
+                );
+            });
     }
 
-    .hero {
-        grid-template-columns: 1fr;
-    }
+
+    displayAdvertisements(results);
 }
 
 
-/* ================= MOBILE NAVIGATION & LAYOUT ================= */
+/* =========================================================
+   10. SEARCH EVENT
+========================================================= */
 
-@media (max-width: 750px) {
-    .header nav {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        display: none;
-        flex-direction: column;
-        padding: 20px 7%;
-        background: #071222;
-        border-top: 1px solid rgba(255,255,255,0.08);
-    }
+if (searchInput) {
 
-    .header nav.active {
-        display: flex;
-    }
-
-    .menu-button {
-        display: block;
-    }
-
-    .search-container {
-        flex-direction: column;
-    }
-
-    .search-container select {
-        width: 100%;
-    }
-
-    .search-container button {
-        padding: 15px;
-    }
-
-    .contact-container {
-        grid-template-columns: 1fr;
-    }
+    searchInput.addEventListener(
+        "input",
+        searchAdvertisements
+    );
 }
 
 
-/* ================= PHONE ================= */
+if (categoryFilter) {
 
-@media (max-width: 550px) {
-    .hero {
-        padding: 65px 5%;
-    }
-
-    .section {
-        padding: 75px 5%;
-    }
-
-    .hero h1 {
-        font-size: 3.2rem;
-    }
-
-    .product-grid,
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-image {
-        height: 210px;
-    }
-
-    .product-image {
-        height: 260px;
-    }
-
-    footer {
-        align-items: flex-start;
-        flex-direction: column;
-    }
+    categoryFilter.addEventListener(
+        "change",
+        searchAdvertisements
+    );
 }
+
+
+/* =========================================================
+   11. ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text) {
+
+    if (text === null ||
+        text === undefined) {
+
+        return "";
+    }
+
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================================
+   12. MOBILE MENU
+========================================================= */
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const navMenu =
+    document.getElementById("navMenu");
+
+
+if (menuButton && navMenu) {
+
+    menuButton.addEventListener(
+        "click",
+        function () {
+
+            navMenu.classList.toggle("active");
+
+        }
+    );
+}
+
+
+/* =========================================================
+   13. CLOSE MOBILE MENU
+========================================================= */
+
+const navLinks =
+    document.querySelectorAll(
+        "#navMenu a"
+    );
+
+
+navLinks.forEach(function (link) {
+
+    link.addEventListener(
+        "click",
+        function () {
+
+            if (navMenu) {
+
+                navMenu.classList.remove(
+                    "active"
+                );
+
+            }
+        }
+    );
+});
+
+
+/* =========================================================
+   14. BACK TO TOP
+========================================================= */
+
+const topButton =
+    document.getElementById("backToTop");
+
+
+if (topButton) {
+
+    window.addEventListener(
+        "scroll",
+        function () {
+
+            if (window.scrollY > 400) {
+
+                topButton.classList.add(
+                    "show"
+                );
+
+            } else {
+
+                topButton.classList.remove(
+                    "show"
+                );
+            }
+
+        }
+    );
+
+
+    topButton.addEventListener(
+        "click",
+        function () {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+    );
+}
+
+
+/* =========================================================
+   15. LOAD SAVED BUSINESSES WHEN WEBSITE OPENS
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadAdvertisements();
+
+    }
+);
