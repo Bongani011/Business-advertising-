@@ -11,7 +11,7 @@ This file:
 2. Checks the uploaded image
 3. Creates the correct category folder
 4. Saves the image
-5. Saves the advertisement information in MySQL
+5. Saves all advertisement information in MySQL
 =========================================================
 */
 
@@ -39,12 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 ===================================================== */
 
 $business_name = trim($_POST["business_name"] ?? "");
+$owner_name    = trim($_POST["owner_name"] ?? "");
+$email         = trim($_POST["email"] ?? "");
+$whatsapp      = trim($_POST["whatsapp"] ?? "");
 $category      = trim($_POST["category"] ?? "");
 $product_name  = trim($_POST["product_name"] ?? "");
-$description   = trim($_POST["description"] ?? "");
 $price         = trim($_POST["price"] ?? "");
-$whatsapp      = trim($_POST["whatsapp"] ?? "");
 $location      = trim($_POST["location"] ?? "");
+$description   = trim($_POST["description"] ?? "");
 
 
 /* =====================================================
@@ -53,15 +55,28 @@ $location      = trim($_POST["location"] ?? "");
 
 if (
     empty($business_name) ||
+    empty($owner_name) ||
+    empty($email) ||
+    empty($whatsapp) ||
     empty($category) ||
     empty($product_name) ||
-    empty($description) ||
     empty($price) ||
-    empty($whatsapp) ||
-    empty($location)
+    empty($location) ||
+    empty($description)
 ) {
 
     die("Please complete all required fields.");
+
+}
+
+
+/* =====================================================
+   CHECK EMAIL
+===================================================== */
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+    die("Please enter a valid email address.");
 
 }
 
@@ -75,7 +90,7 @@ if (
     $_FILES["business_image"]["error"] !== UPLOAD_ERR_OK
 ) {
 
-    die("Please select a business image.");
+    die("Please select a business or product image.");
 
 }
 
@@ -127,7 +142,7 @@ if ($image_info === false) {
 $image_type = $image_info["mime"];
 
 
-if (!in_array($image_type, $allowed_types)) {
+if (!in_array($image_type, $allowed_types, true)) {
 
     die(
         "Invalid image type. " .
@@ -153,7 +168,7 @@ $allowed_categories = [
 ];
 
 
-if (!in_array($category, $allowed_categories)) {
+if (!in_array($category, $allowed_categories, true)) {
 
     die("Invalid business category.");
 
@@ -166,27 +181,26 @@ if (!in_array($category, $allowed_categories)) {
 
 $category_folders = [
 
-    "Fashion"            => "fashion",
+    "Fashion"          => "fashion",
 
-    "Electronics"        => "electronics",
+    "Electronics"      => "electronics",
 
-    "Food"               => "food",
+    "Food"              => "food",
 
-    "Beauty"             => "beauty",
+    "Beauty"            => "beauty",
 
-    "Services"           => "services",
+    "Services"          => "services",
 
-    "Home & Furniture"   => "home-furniture",
+    "Home & Furniture" => "home-furniture",
 
-    "Automotive"         => "automotive",
+    "Automotive"        => "automotive",
 
-    "Other"              => "other"
+    "Other"             => "other"
 
 ];
 
 
-$folder_name =
-    $category_folders[$category];
+$folder_name = $category_folders[$category];
 
 
 /* =====================================================
@@ -212,9 +226,6 @@ if (!is_dir($upload_directory)) {
    CREATE UNIQUE IMAGE NAME
 ===================================================== */
 
-$extension = "";
-
-
 switch ($image_type) {
 
     case "image/jpeg":
@@ -232,6 +243,9 @@ switch ($image_type) {
     case "image/gif":
         $extension = "gif";
         break;
+
+    default:
+        die("Unsupported image format.");
 
 }
 
@@ -269,7 +283,7 @@ if (!move_uploaded_file(
    DATABASE IMAGE PATH
 ===================================================== */
 
-$image_url =
+$image_path =
     "uploads/" .
     $folder_name .
     "/" .
@@ -284,20 +298,26 @@ $sql = "
     INSERT INTO businesses
     (
         business_name,
+        owner_name,
+        email,
+        whatsapp,
         category,
         product_name,
-        description,
         price,
-        whatsapp,
         location,
-        image_url
+        description,
+        image_path
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ";
 
 
 $stmt = $conn->prepare($sql);
 
+
+/* =====================================================
+   CHECK DATABASE PREPARATION
+===================================================== */
 
 if (!$stmt) {
 
@@ -320,15 +340,17 @@ if (!$stmt) {
 ===================================================== */
 
 $stmt->bind_param(
-    "ssssssss",
+    "ssssssssss",
     $business_name,
+    $owner_name,
+    $email,
+    $whatsapp,
     $category,
     $product_name,
-    $description,
     $price,
-    $whatsapp,
     $location,
-    $image_url
+    $description,
+    $image_path
 );
 
 
@@ -371,8 +393,7 @@ if ($stmt->execute()) {
 unlink($file_path);
 
 
-$error =
-    $stmt->error;
+$error = $stmt->error;
 
 
 $stmt->close();
