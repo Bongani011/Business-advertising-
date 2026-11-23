@@ -1,37 +1,15 @@
 /* =========================================================
    BONGX031 BUSINESS ADVERTISING
-   SUPABASE BUSINESS + IMAGE STORAGE SYSTEM
+   PHP + MYSQL VERSION
 ========================================================= */
 
 
 /* =========================================================
-   1. SUPABASE CONFIGURATION
-========================================================= */
-
-// Replace these two values with your own Supabase details.
-
-const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
-
-
-/* =========================================================
-   2. CONNECT TO SUPABASE
-========================================================= */
-
-const { createClient } = supabase;
-
-const db = createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
-
-
-/* =========================================================
-   3. HTML ELEMENTS
+   1. HTML ELEMENTS
 ========================================================= */
 
 const advertisementForm =
-    document.getElementById("advertisementForm");
+    document.getElementById("contactForm");
 
 const imageInput =
     document.getElementById("businessImage");
@@ -48,12 +26,12 @@ const searchInput =
 const categoryFilter =
     document.getElementById("categoryFilter");
 
-const submitButton =
-    document.getElementById("submitAdvertisement");
+const searchButton =
+    document.getElementById("searchButton");
 
 
 /* =========================================================
-   4. IMAGE PREVIEW
+   2. IMAGE PREVIEW
 ========================================================= */
 
 if (imageInput) {
@@ -62,393 +40,254 @@ if (imageInput) {
 
         const file = this.files[0];
 
+
         if (!file) {
-            return;
-        }
-
-        // Check file type
-        if (!file.type.startsWith("image/")) {
-
-            alert("Please select a valid image.");
-
-            this.value = "";
-
-            return;
-        }
-
-
-        // Check file size
-        // Maximum = 5 MB
-
-        const maxSize = 5 * 1024 * 1024;
-
-        if (file.size > maxSize) {
-
-            alert("Image must be smaller than 5 MB.");
-
-            this.value = "";
-
-            return;
-        }
-
-
-        // Create preview
-
-        const reader = new FileReader();
-
-        reader.onload = function (event) {
 
             if (imagePreview) {
 
-                imagePreview.src = event.target.result;
+                imagePreview.src = "";
 
-                imagePreview.style.display = "block";
+                imagePreview.style.display = "none";
+
             }
-        };
+
+            return;
+        }
+
+
+        /* -----------------------------------------
+           CHECK IMAGE TYPE
+        ----------------------------------------- */
+
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/gif"
+        ];
+
+
+        if (!allowedTypes.includes(file.type)) {
+
+            alert(
+                "Please select a JPG, PNG, WEBP or GIF image."
+            );
+
+            this.value = "";
+
+            return;
+        }
+
+
+        /* -----------------------------------------
+           CHECK IMAGE SIZE
+           Maximum = 5 MB
+        ----------------------------------------- */
+
+        const maxSize =
+            5 * 1024 * 1024;
+
+
+        if (file.size > maxSize) {
+
+            alert(
+                "Image is too large. Maximum size is 5 MB."
+            );
+
+            this.value = "";
+
+            return;
+        }
+
+
+        /* -----------------------------------------
+           CREATE IMAGE PREVIEW
+        ----------------------------------------- */
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function (event) {
+
+                if (imagePreview) {
+
+                    imagePreview.src =
+                        event.target.result;
+
+                    imagePreview.style.display =
+                        "block";
+
+                }
+
+            };
+
 
         reader.readAsDataURL(file);
+
     });
+
 }
 
 
 /* =========================================================
-   5. UPLOAD IMAGE TO SUPABASE STORAGE
+   3. IMPORTANT PHP FORM SUBMISSION
 ========================================================= */
 
-async function uploadBusinessImage(file) {
+/*
+   DO NOT use event.preventDefault() here.
 
-    if (!file) {
-        throw new Error("No image selected.");
-    }
+   The form must be allowed to submit normally to:
 
+       upload.php
 
-    /*
-       Create a unique filename.
+   This sends:
 
-       Example:
+   - business information
+   - image
+   - POST data
 
-       fashion/
-       1732456789123-shoes.jpg
-    */
+   to the PHP server.
+*/
 
-    const fileExtension =
-        file.name.split(".").pop();
-
-    const uniqueName =
-        Date.now() +
-        "-" +
-        Math.random().toString(36).substring(2) +
-        "." +
-        fileExtension;
-
-
-    const category =
-        document.getElementById("businessCategory")?.value ||
-        "other";
-
-
-    const filePath =
-        category.toLowerCase().replace(/\s+/g, "-") +
-        "/" +
-        uniqueName;
-
-
-    /*
-       Upload image to Supabase Storage.
-
-       Bucket name:
-       business-images
-    */
-
-    const { error } = await db
-        .storage
-        .from("business-images")
-        .upload(filePath, file, {
-            cacheControl: "3600",
-            upsert: false
-        });
-
-
-    if (error) {
-
-        console.error("Image upload error:", error);
-
-        throw new Error(
-            "Image could not be uploaded: " +
-            error.message
-        );
-    }
-
-
-    /*
-       Get public URL of uploaded image
-    */
-
-    const { data } = db
-        .storage
-        .from("business-images")
-        .getPublicUrl(filePath);
-
-
-    return data.publicUrl;
-}
-
-
-/* =========================================================
-   6. SAVE BUSINESS ADVERTISEMENT
-========================================================= */
 
 if (advertisementForm) {
 
     advertisementForm.addEventListener(
         "submit",
-        async function (event) {
+        function () {
 
-            event.preventDefault();
-
-
-            /* -----------------------------------------
-               GET FORM VALUES
-            ----------------------------------------- */
-
-            const businessName =
-                document.getElementById("businessName")?.value.trim();
-
-            const category =
-                document.getElementById("businessCategory")?.value;
-
-            const productName =
-                document.getElementById("productName")?.value.trim();
-
-            const description =
-                document.getElementById("description")?.value.trim();
-
-            const price =
-                document.getElementById("price")?.value.trim();
-
-            const whatsapp =
-                document.getElementById("whatsapp")?.value.trim();
-
-            const location =
-                document.getElementById("location")?.value.trim();
-
-            const image =
-                document.getElementById("businessImage")?.files[0];
-
-
-            /* -----------------------------------------
-               VALIDATION
-            ----------------------------------------- */
-
-            if (!businessName ||
-                !category ||
-                !productName ||
-                !description ||
-                !price ||
-                !whatsapp ||
-                !location ||
-                !image) {
-
-                alert(
-                    "Please complete all fields and select a business image."
+            const submitButton =
+                advertisementForm.querySelector(
+                    'button[type="submit"]'
                 );
 
-                return;
-            }
-
-
-            /* -----------------------------------------
-               CHANGE BUTTON
-            ----------------------------------------- */
 
             if (submitButton) {
 
                 submitButton.disabled = true;
 
                 submitButton.textContent =
-                    "Uploading advertisement...";
+                    "Uploading Advertisement...";
+
             }
 
-
-            try {
-
-                /* -------------------------------------
-                   UPLOAD IMAGE
-                ------------------------------------- */
-
-                const imageURL =
-                    await uploadBusinessImage(image);
-
-
-                /* -------------------------------------
-                   SAVE BUSINESS INFORMATION
-                ------------------------------------- */
-
-                const { error } = await db
-                    .from("businesses")
-                    .insert([
-                        {
-                            business_name: businessName,
-
-                            category: category,
-
-                            product_name: productName,
-
-                            description: description,
-
-                            price: price,
-
-                            whatsapp: whatsapp,
-
-                            location: location,
-
-                            image_url: imageURL
-                        }
-                    ]);
-
-
-                /* -------------------------------------
-                   DATABASE ERROR
-                ------------------------------------- */
-
-                if (error) {
-
-                    console.error(
-                        "Database error:",
-                        error
-                    );
-
-                    throw new Error(
-                        "Advertisement could not be saved: " +
-                        error.message
-                    );
-                }
-
-
-                /* -------------------------------------
-                   SUCCESS
-                ------------------------------------- */
-
-                alert(
-                    "Advertisement successfully published!"
-                );
-
-
-                /* Clear form */
-
-                advertisementForm.reset();
-
-
-                /* Hide preview */
-
-                if (imagePreview) {
-
-                    imagePreview.src = "";
-
-                    imagePreview.style.display = "none";
-                }
-
-
-                /* Reload advertisements */
-
-                await loadAdvertisements();
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                alert(
-                    error.message ||
-                    "Something went wrong while saving the advertisement."
-                );
-
-
-            } finally {
-
-                if (submitButton) {
-
-                    submitButton.disabled = false;
-
-                    submitButton.textContent =
-                        "Publish Advertisement";
-                }
-            }
         }
     );
+
 }
 
 
 /* =========================================================
-   7. LOAD ADVERTISEMENTS
+   4. LOAD ADVERTISEMENTS
 ========================================================= */
 
 async function loadAdvertisements() {
 
     if (!productGrid) {
+
         return;
+
     }
 
 
     productGrid.innerHTML = `
-        <div class="loading">
+
+        <div class="loading-message">
+
             Loading advertisements...
+
         </div>
+
     `;
 
 
-    const { data, error } = await db
-        .from("businesses")
-        .select("*")
-        .order("created_at", {
-            ascending: false
-        });
+    try {
+
+        /*
+           businesses.php should return JSON
+           containing advertisements from MySQL.
+        */
+
+        const response =
+            await fetch("businesses.php");
 
 
-    if (error) {
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not connect to businesses.php"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        displayAdvertisements(data);
+
+
+    } catch (error) {
 
         console.error(
-            "Could not load advertisements:",
+            "Marketplace error:",
             error
         );
 
 
         productGrid.innerHTML = `
+
             <div class="no-products">
-                <h3>Advertisements could not be loaded</h3>
-                <p>Please check your Supabase connection.</p>
+
+                <h3>
+                    Advertisements could not be loaded
+                </h3>
+
+                <p>
+                    Please make sure PHP and MySQL
+                    are running.
+                </p>
+
             </div>
+
         `;
 
-        return;
     }
 
-
-    displayAdvertisements(data);
 }
 
 
 /* =========================================================
-   8. DISPLAY ADVERTISEMENTS
+   5. DISPLAY ADVERTISEMENTS
 ========================================================= */
 
 function displayAdvertisements(advertisements) {
 
     if (!productGrid) {
+
         return;
+
     }
 
 
     productGrid.innerHTML = "";
 
 
-    if (!advertisements ||
-        advertisements.length === 0) {
+    if (
+        !advertisements ||
+        advertisements.length === 0
+    ) {
 
         productGrid.innerHTML = `
+
             <div class="no-products">
 
-                <h3>No advertisements found</h3>
+                <h3>
+                    No advertisements found
+                </h3>
 
                 <p>
                     Be the first business to advertise
@@ -456,238 +295,294 @@ function displayAdvertisements(advertisements) {
                 </p>
 
             </div>
+
         `;
 
         return;
+
     }
 
 
-    advertisements.forEach(function (business) {
-
-        const card =
-            document.createElement("div");
-
-        card.className = "product-card";
+    advertisements.forEach(
+        function (business) {
 
 
-        /*
-           Convert WhatsApp number into
-           a WhatsApp URL.
-        */
+            /* =====================================
+               CREATE PRODUCT CARD
+            ===================================== */
 
-        let whatsappNumber =
-            business.whatsapp
-                .replace(/\D/g, "");
+            const card =
+                document.createElement("div");
 
 
-        /*
-           South African numbers:
-
-           0786701301
-
-           becomes:
-
-           27786701301
-        */
-
-        if (
-            whatsappNumber.startsWith("0")
-        ) {
-
-            whatsappNumber =
-                "27" +
-                whatsappNumber.substring(1);
-        }
+            card.className =
+                "product-card";
 
 
-        const whatsappMessage =
-            encodeURIComponent(
-                "Hello, I am interested in " +
-                business.product_name +
-                " advertised on BONGX031."
-            );
+            /* =====================================
+               WHATSAPP NUMBER
+            ===================================== */
+
+            let whatsappNumber =
+                String(
+                    business.whatsapp || ""
+                ).replace(/\D/g, "");
 
 
-        const whatsappURL =
-            `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+            /*
+               Convert:
+
+               0786701301
+
+               to:
+
+               27786701301
+            */
+
+            if (
+                whatsappNumber.startsWith("0")
+            ) {
+
+                whatsappNumber =
+                    "27" +
+                    whatsappNumber.substring(1);
+
+            }
 
 
-        /* -----------------------------------------
-           CREATE CARD
-        ----------------------------------------- */
+            /* =====================================
+               WHATSAPP MESSAGE
+            ===================================== */
 
-        card.innerHTML = `
-
-            <div class="product-image">
-
-                <img
-                    src="${business.image_url}"
-                    alt="${escapeHTML(
-                        business.product_name
-                    )}"
-                    loading="lazy"
-                >
-
-                <span class="category">
-                    ${escapeHTML(
-                        business.category
-                    )}
-                </span>
-
-            </div>
+            const whatsappMessage =
+                encodeURIComponent(
+                    "Hello, I am interested in " +
+                    (
+                        business.product_name ||
+                        "your product"
+                    ) +
+                    " advertised on BONGX031."
+                );
 
 
-            <div class="product-info">
-
-                <h3 class="business-name">
-                    ${escapeHTML(
-                        business.business_name
-                    )}
-                </h3>
+            const whatsappURL =
+                `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
 
-                <h4>
-                    ${escapeHTML(
-                        business.product_name
-                    )}
-                </h4>
+            /* =====================================
+               IMAGE PATH
+
+               MySQL uses:
+
+               image_path
+
+               NOT image_url
+            ===================================== */
+
+            const imagePath =
+                business.image_path ||
+                "";
 
 
-                <p class="description">
-                    ${escapeHTML(
-                        business.description
-                    )}
-                </p>
+            /* =====================================
+               PRODUCT CARD
+            ===================================== */
 
+            card.innerHTML = `
 
-                <p class="location">
-                    📍 ${escapeHTML(
-                        business.location
-                    )}
-                </p>
+                <div class="product-image">
 
-
-                <div class="product-bottom">
-
-                    <span class="price">
-                        R${escapeHTML(
-                            business.price
-                        )}
-                    </span>
-
-
-                    <a
-                        href="${whatsappURL}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="whatsapp-btn"
+                    <img
+                        src="${escapeHTML(imagePath)}"
+                        alt="${escapeHTML(
+                            business.product_name
+                        )}"
+                        loading="lazy"
                     >
-                        WhatsApp
-                    </a>
+
+
+                    <span class="category">
+
+                        ${escapeHTML(
+                            business.category
+                        )}
+
+                    </span>
 
                 </div>
 
-            </div>
 
-        `;
+                <div class="product-info">
 
 
-        productGrid.appendChild(card);
-    });
+                    <h3 class="business-name">
+
+                        ${escapeHTML(
+                            business.business_name
+                        )}
+
+                    </h3>
+
+
+                    <h4>
+
+                        ${escapeHTML(
+                            business.product_name
+                        )}
+
+                    </h4>
+
+
+                    <p class="description">
+
+                        ${escapeHTML(
+                            business.description
+                        )}
+
+                    </p>
+
+
+                    <p class="location">
+
+                        📍
+                        ${escapeHTML(
+                            business.location
+                        )}
+
+                    </p>
+
+
+                    <div class="product-bottom">
+
+
+                        <span class="price">
+
+                            R${escapeHTML(
+                                business.price
+                            )}
+
+                        </span>
+
+
+                        <a
+                            href="${whatsappURL}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="whatsapp-btn"
+                        >
+
+                            WhatsApp
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            productGrid.appendChild(card);
+
+        }
+    );
+
 }
 
 
 /* =========================================================
-   9. SEARCH ADVERTISEMENTS
+   6. SEARCH ADVERTISEMENTS
 ========================================================= */
 
-async function searchAdvertisements() {
+function searchAdvertisements() {
 
     const search =
-        searchInput?.value.trim().toLowerCase() || "";
-
-    const category =
-        categoryFilter?.value || "";
-
-
-    let query =
-        db
-            .from("businesses")
-            .select("*")
-            .order("created_at", {
-                ascending: false
-            });
+        searchInput
+            ? searchInput.value.trim().toLowerCase()
+            : "";
 
 
-    /* -----------------------------------------
-       CATEGORY FILTER
-    ----------------------------------------- */
-
-    if (category) {
-
-        query =
-            query.eq(
-                "category",
-                category
-            );
-    }
+    const selectedCategory =
+        categoryFilter
+            ? categoryFilter.value.toLowerCase()
+            : "all";
 
 
-    const { data, error } =
-        await query;
-
-
-    if (error) {
-
-        console.error(
-            "Search error:",
-            error
+    const cards =
+        document.querySelectorAll(
+            ".product-card"
         );
 
-        return;
-    }
+
+    cards.forEach(
+        function (card) {
+
+            const cardText =
+                card.textContent.toLowerCase();
 
 
-    /* -----------------------------------------
-       TEXT SEARCH
-    ----------------------------------------- */
-
-    let results = data;
-
-
-    if (search) {
-
-        results =
-            data.filter(function (business) {
-
-                const searchableText = `
-
-                    ${business.business_name}
-
-                    ${business.product_name}
-
-                    ${business.description}
-
-                    ${business.category}
-
-                    ${business.location}
-
-                `.toLowerCase();
-
-
-                return searchableText.includes(
-                    search
+            const categoryElement =
+                card.querySelector(
+                    ".category"
                 );
-            });
-    }
 
 
-    displayAdvertisements(results);
+            const cardCategory =
+                categoryElement
+                    ? categoryElement.textContent
+                        .trim()
+                        .toLowerCase()
+                    : "";
+
+
+            const matchesSearch =
+                !search ||
+                cardText.includes(search);
+
+
+            const matchesCategory =
+                selectedCategory === "all" ||
+                cardCategory === selectedCategory;
+
+
+            if (
+                matchesSearch &&
+                matchesCategory
+            ) {
+
+                card.style.display =
+                    "";
+
+            } else {
+
+                card.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
 }
 
 
 /* =========================================================
-   10. SEARCH EVENT
+   7. SEARCH BUTTON
+========================================================= */
+
+if (searchButton) {
+
+    searchButton.addEventListener(
+        "click",
+        searchAdvertisements
+    );
+
+}
+
+
+/* =========================================================
+   8. LIVE SEARCH
 ========================================================= */
 
 if (searchInput) {
@@ -696,8 +591,13 @@ if (searchInput) {
         "input",
         searchAdvertisements
     );
+
 }
 
+
+/* =========================================================
+   9. CATEGORY FILTER
+========================================================= */
 
 if (categoryFilter) {
 
@@ -705,19 +605,23 @@ if (categoryFilter) {
         "change",
         searchAdvertisements
     );
+
 }
 
 
 /* =========================================================
-   11. ESCAPE HTML
+   10. ESCAPE HTML
 ========================================================= */
 
 function escapeHTML(text) {
 
-    if (text === null ||
-        text === undefined) {
+    if (
+        text === null ||
+        text === undefined
+    ) {
 
         return "";
+
     }
 
 
@@ -727,35 +631,47 @@ function escapeHTML(text) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
 
 
 /* =========================================================
-   12. MOBILE MENU
+   11. MOBILE MENU
 ========================================================= */
 
 const menuButton =
-    document.getElementById("menuButton");
+    document.getElementById(
+        "menuButton"
+    );
+
 
 const navMenu =
-    document.getElementById("navMenu");
+    document.getElementById(
+        "navMenu"
+    );
 
 
-if (menuButton && navMenu) {
+if (
+    menuButton &&
+    navMenu
+) {
 
     menuButton.addEventListener(
         "click",
         function () {
 
-            navMenu.classList.toggle("active");
+            navMenu.classList.toggle(
+                "active"
+            );
 
         }
     );
+
 }
 
 
 /* =========================================================
-   13. CLOSE MOBILE MENU
+   12. CLOSE MOBILE MENU
 ========================================================= */
 
 const navLinks =
@@ -764,30 +680,36 @@ const navLinks =
     );
 
 
-navLinks.forEach(function (link) {
+navLinks.forEach(
+    function (link) {
 
-    link.addEventListener(
-        "click",
-        function () {
+        link.addEventListener(
+            "click",
+            function () {
 
-            if (navMenu) {
+                if (navMenu) {
 
-                navMenu.classList.remove(
-                    "active"
-                );
+                    navMenu.classList.remove(
+                        "active"
+                    );
+
+                }
 
             }
-        }
-    );
-});
+        );
+
+    }
+);
 
 
 /* =========================================================
-   14. BACK TO TOP
+   13. BACK TO TOP
 ========================================================= */
 
 const topButton =
-    document.getElementById("backToTop");
+    document.getElementById(
+        "backToTop"
+    );
 
 
 if (topButton) {
@@ -796,7 +718,9 @@ if (topButton) {
         "scroll",
         function () {
 
-            if (window.scrollY > 400) {
+            if (
+                window.scrollY > 400
+            ) {
 
                 topButton.classList.add(
                     "show"
@@ -807,6 +731,7 @@ if (topButton) {
                 topButton.classList.remove(
                     "show"
                 );
+
             }
 
         }
@@ -824,11 +749,12 @@ if (topButton) {
 
         }
     );
+
 }
 
 
 /* =========================================================
-   15. LOAD SAVED BUSINESSES WHEN WEBSITE OPENS
+   14. LOAD DATABASE ADVERTISEMENTS
 ========================================================= */
 
 document.addEventListener(
