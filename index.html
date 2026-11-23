@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -704,119 +703,249 @@
                 078 670 1301
             </p>
 
+            <!-- TECHNICIAN CONTACT -->
+
+            <div class="technician-contact">
+
+                <h3>
+                    Technician Support
+                </h3>
+
+                <p>
+                    For technical assistance, contact:
+                </p>
+
+                <p>
+                    <strong>
+                        Fumpro Zos Electronics
+                    </strong>
+                </p>
+
+                <p>
+                    <strong>
+                        Phone / WhatsApp:
+                    </strong>
+
+                    073 323 4950
+                </p>
+
+                <a
+                    class="whatsapp-btn"
+                    href="https://wa.me/27733234950"
+                    target="_blank"
+                    rel="noopener">
+
+                    Contact Technician
+
+                </a>
+
+            </div>
+
         </div>
 
 
 
-        <!-- ADVERTISEMENT FORM -->
+        <!-- =================================================
+             ADVERTISEMENT FORM
+        ================================================= -->
 
-        <form id="contactForm">
+        <form
+            id="contactForm"
+            action="upload.php"
+            method="POST"
+            enctype="multipart/form-data"
+        >
 
+
+            <!-- BUSINESS NAME -->
 
             <input
                 type="text"
                 id="businessName"
-                name="businessName"
+                name="business_name"
                 placeholder="Business name"
-                required>
+                required
+            >
 
+
+            <!-- OWNER NAME -->
 
             <input
                 type="text"
                 id="ownerName"
-                name="ownerName"
+                name="owner_name"
                 placeholder="Your name"
-                required>
+                required
+            >
 
+
+            <!-- EMAIL -->
 
             <input
                 type="email"
                 id="email"
                 name="email"
                 placeholder="Email address"
-                required>
+                required
+            >
 
+
+            <!-- WHATSAPP / PHONE -->
 
             <input
                 type="tel"
                 id="phone"
-                name="phone"
+                name="whatsapp"
                 placeholder="WhatsApp / phone number"
-                required>
+                required
+            >
 
+
+            <!-- CATEGORY -->
 
             <select
                 id="businessCategory"
-                name="businessCategory"
-                required>
+                name="category"
+                required
+            >
 
                 <option value="">
                     Select business category
                 </option>
 
-                <option value="fashion">
+                <option value="Fashion">
                     Fashion
                 </option>
 
-                <option value="electronics">
+                <option value="Electronics">
                     Electronics
                 </option>
 
-                <option value="food">
+                <option value="Food">
                     Food
                 </option>
 
-                <option value="beauty">
+                <option value="Beauty">
                     Beauty
                 </option>
 
-                <option value="services">
+                <option value="Services">
                     Services
                 </option>
 
-                <option value="home">
+                <option value="Home & Furniture">
                     Home & Furniture
                 </option>
 
-                <option value="automotive">
+                <option value="Automotive">
                     Automotive
                 </option>
 
-                <option value="other">
+                <option value="Other">
                     Other
                 </option>
 
             </select>
 
 
+            <!-- PRODUCT / SERVICE -->
+
             <input
                 type="text"
                 id="productName"
-                name="productName"
+                name="product_name"
                 placeholder="Product or service name"
-                required>
+                required
+            >
 
+
+            <!-- PRICE -->
 
             <input
                 type="text"
                 id="price"
                 name="price"
-                placeholder="Price (e.g. R500)">
+                placeholder="Price (e.g. R500)"
+                required
+            >
 
+
+            <!-- LOCATION -->
+
+            <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="Business location"
+                required
+            >
+
+
+            <!-- DESCRIPTION -->
 
             <textarea
                 id="message"
-                name="message"
+                name="description"
                 rows="5"
-                placeholder="Tell us about your business or advertisement..."
-                required></textarea>
+                placeholder="Tell us about your business, product or service..."
+                required
+            ></textarea>
 
+
+            <!-- =================================================
+                 IMAGE UPLOAD
+            ================================================= -->
+
+            <div class="image-upload-section">
+
+                <label for="businessImage">
+
+                    Business / Product Image
+
+                </label>
+
+                <p class="upload-help">
+
+                    Upload a clear picture of the product,
+                    business or service you are advertising.
+
+                </p>
+
+                <input
+                    type="file"
+                    id="businessImage"
+                    name="business_image"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    required
+                >
+
+
+                <!-- IMAGE PREVIEW -->
+
+                <img
+                    id="imagePreview"
+                    src=""
+                    alt="Selected image preview"
+                    style="
+                        display:none;
+                        width:100%;
+                        max-width:350px;
+                        margin-top:15px;
+                        border-radius:12px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- SUBMIT -->
 
             <button
                 type="submit"
+                id="submitAdvertisement"
                 class="btn primary">
 
-                Submit Advertisement
+                Publish Advertisement
 
             </button>
 
@@ -894,4 +1023,3 @@
 
 </body>
 </html>
-```
